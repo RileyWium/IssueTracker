@@ -1,0 +1,223 @@
+\documentclass{scrreprt}
+\usepackage{listings}
+\usepackage{underscore}
+\usepackage{graphicx}
+\usepackage[bookmarks=true]{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\hypersetup{
+    %bookmarks=false,    % show bookmarks bar?
+    pdftitle={Software Requirement Specification},    % title
+    pdfauthor={Riley Wium},                     % author
+    pdfsubject={TeX and LaTeX},                        % subject of the document
+    pdfkeywords={TeX, LaTeX, graphics, images}, % list of keywords
+    colorlinks=true,       % false: boxed links; true: colored links
+    linkcolor=blue,       % color of internal links
+    citecolor=black,       % color of links to bibliography
+    filecolor=black,        % color of file links
+    urlcolor=purple,        % color of external links
+    linktoc=page            % only page is linked
+}%
+\def\myversion{1.0 }
+\date{}
+%\title{%
+
+%}
+\usepackage{hyperref}
+\begin{document}
+
+\begin{flushright}
+    \rule{16cm}{5pt}\vskip1cm
+    \begin{bfseries}
+        \Huge{SOFTWARE REQUIREMENTS\\ SPECIFICATION}\\
+        \vspace{1.5cm}
+        for\\
+        \vspace{1.5cm}
+        Issue Tracker\\
+        \vspace{1.5cm}
+        \LARGE{Version \myversion}\\
+        \vspace{1.5cm}
+        Prepared by : Riley Wium\\
+        \vspace{6cm}
+        \today\\
+    \end{bfseries}
+\end{flushright}
+
+\tableofcontents
+
+\chapter{Introduction}
+
+\section{Purpose}
+This is a portfolio project for the creation of a custom issue tracker. If the system is built robustly enough it can even be reworked into a bug tracker, project manager, or scrum board. The systems purpose is to allow for the management of tasks and sub-tasks making scheduling easier and gaining data on the time and effort it takes to complete certain tasks. The system should allow for the creation, manipulation, and completion of task objects. The task objects are to be stored on a database and accessed via website. The project will include some functionality which are superfluous to my personal use of the tool but will serve it as a portfolio piece. Information about the design and progress of the issue tracker will be stored in this document.
+
+\section{Project Scope}
+The project is created for personal use as a tool for organising my tasks during projects and is meant to be completed over the course of a couple weeks, with the deadline being the end of January 2020.
+\newline
+The project will mainly use C\#, .NET, SQL, and the MVC design pattern. It will also likely incorporate Bootstrap and a third party encryption service.
+\newline
+The application will keep track of the task name, task feedback, difficulty rating of task, task descriptions, completion status, and the people assigned to the task. Users will be able to login with accounts assigned ID's and host projects, invite others, and be invited themselves. The user's can either be project owners or contributors, with the former allowing for more control over the project. The project will be focused on the Windows platform, but will be tested to see how it functions on iPad and Linux environments. All created data will persist in the database and only be accessible by the projects team via a browser.
+\newline
+\begin{figure}
+    \centering
+    \includegraphics[width=15cm]{10.jpg}
+    \caption{Issue Tracker System}
+    \label{fig:IT Overview}
+\end{figure}
+
+\chapter{Overall Description}
+
+\section{Product Perspective}
+The project must be accessed via browser of which Chrome, Firefox, and Edge will be tested. Windows will be the main platform the project is developed for but Linux and Mac systems will be tested as well.
+
+\section{User Classes and Characteristics}
+The issue tracker has two types of users. 
+\begin{itemize}
+  \item Project Owners
+  \item Project Contributors
+\end{itemize}
+Project contributors have the permission to add issues, assign users, complete tasks, edit descriptions, rate difficulty, and assign feedback. 
+\newline
+Project owners have the permissions of contributors but can also add new contributors, delete the project, and rename the project.
+
+\section{Product Functions}
+This Issue Tracker should include the following functionality.
+
+\subsection{User Interfaces}
+\textbf{Client Entry Screen}: Covers main issue functionality. The user can set up a client list, which will (A) allow projects to be billed to a particular client, and (B) allow the user to manage projects by client. For personal projects, the user may enter his/her own personal information.
+
+\textbf{Login Screen}: Allows for users to access their account information and projects. Accompanied by a registration screen.
+
+\textbf{Project Screen}: Covers main project and team creation functionality. A project can be created or modified from this screen. This screen will enable the user to assign the project's priority, and project the time frame they expect the project to be worked on. It will also include client information and a list of steps required to complete the project. From this screen, the user can also track supplies required for the project.
+
+\subsection{Synchronize Data}
+User will be able to synchronize his projects and project information on a client (PC or PocketPC) with the server any time he/she can connect to the server via a network connection.
+
+If the database's copy of a particular project's information has been updated since the user last synchronized, this new data will be copied to the client.  If the client has added or updated any project information since the last synchronization, this information will be copied to the server.  If both the client and the server have logged changes to a particular project since the last synchronization, the user will be allowed to choose which information to overwrite.
+
+\subsection{Synchronization Server}
+The server software will open a port on the network and will accept incoming connections with clients. 
+Upon connection, the server will serve requested data to the client program. 
+If the client program attempts to update a project, the server software will check the user's credentials to make sure that they have the rights to edit the projects.  If they do, the server will update the database accordingly.
+
+\subsection{Potential Functions}
+\begin{itemize}
+    \item email accessibility
+    \item ticket dependency (ticket 2 can only be completed after ticket 1)
+    \item email ticket creation
+    \item easy to rework to bug tracker, project manager, or scrum board
+    \item time tracker
+    \item file attachments 
+    \item more user permission customization
+\end{itemize}
+
+\chapter{System Features}
+The system will be a three-tiered design with a Server Application, a Database Engine, and one or more Client Applications. The user will only interact with the system through client applications running on a PC or PocketPC. The general user interface will be forms with buttons and other familiar human computer interactive tools, implemented in Java Swing technology. The user will use this interface to check-out a project, which will interact with the server application (via http) to retrieve the necessary data. The user will view and manipulate that data locally (on their PC or PocketPC) and then check-in the project, again through the server. The server will interact with the database to centrally store all the data for the system. In the case of running reports, the user will interact with their client application, which will request that the server generate the report and send it back to the client (or send the URL of the resulting report). 
+
+\section{Description and Priority}
+The project has features that are main and also some are sub. Here is listed all the features necessary for this software.
+\newline
+The features with priority up to down - 
+\begin{itemize}
+    \item Project Issue Board
+    \begin{table}[]
+    \begin{tabular}{ll}
+    Purpose    &  \\
+    Priority   &  \\
+    Input      &  \\
+    Processing &  \\
+    Output     & 
+    \end{tabular}
+    \end{table}
+    \item Projects Board
+    \begin{table}[]
+    \begin{tabular}{ll}
+    Purpose    &  \\
+    Priority   &  \\
+    Input      &  \\
+    Processing &  \\
+    Output     & 
+    \end{tabular}
+    \end{table}
+    \item Login Page
+    \begin{table}[]
+    \begin{tabular}{ll}
+    Purpose    &  \\
+    Priority   &  \\
+    Input      &  \\
+    Processing &  \\
+    Output     & 
+    \end{tabular}
+    \end{table}
+    \item Synchronize Data
+    \begin{table}[]
+    \begin{tabular}{ll}
+    Purpose    &  \\
+    Priority   &  \\
+    Input      &  \\
+    Processing &  \\
+    Output     & 
+    \end{tabular}
+    \end{table}
+    \item Synchronize Server
+    \begin{table}[]
+    \begin{tabular}{ll}
+    Purpose    &  \\
+    Priority   &  \\
+    Input      &  \\
+    Processing &  \\
+    Output     & 
+    \end{tabular}
+    \end{table}
+    
+    
+
+\end{itemize}
+Project Lifecycle: Our program will allow the user to track projects from start to finish. Each step is defined in more detail in the steps below.
+\begin{itemize}
+    \item The user can first create a project with a basic idea of they want to accomplish.
+    \item Once the project is created, the user can:
+    \begin{itemize}
+        \item log time spent on that project in the Time Entry Screen
+        \item track the purchases associated with the project Cost Entry Screen
+        \item add additional documentation notes to each entry Time Entry Screen or Project Screen
+        \item track his/her personal schedule, and schedule times to work on specific projects Schedule Screen
+    \end{itemize}
+    \item If the project has a client associated with it, the user can use this software to manage time spent on the project and report it by running a time report in the Time Entry Screen
+    \item After completing a project the user can still have access to the documentation for that project by recalling a project in the Project Screen
+    Interface: All screens except the “Reports Screen” will be implemented for both PDA and PC. The “Reports Screen” will be only for the PC.
+    \item Client Entry Screen: The user can set up a client list, which will (A) allow projects to be billed to a particular client, and (B) allow the user to manage projects by client. For personal projects, the user may enter his/her own personal information for personal projects.
+    \item Project Screen: A project can be created or modified from this screen. This screen will enable the user to assign the project's priority, and project the time frame they expect the project to be worked on. It will also include client information and a list of steps required to complete the project. From this screen, the user can also track supplies required for the project.
+    \item Time Entry Screen: A user can check-in and check-out of a particular project by providing a date, time, and project number. There will also be a field to enter notes.
+    \item Schedule Screen: A user can enter his/her personal weekly schedule, and schedule times to work on specific projects.
+    \item Reports screen: A basic menu to allow a user to run a variety of reports on their projects.
+
+A person may want to create a project and assign that project or a portion of their own project to another user.  We will have a place to assign a project to someone else, and when you synchronize with the database, it create store that project for that user.  When that person synchronizes his PC with the Database, it will download all of his assigned projects to his PC or PDA.  Also if a user wants to assign part of his project to someone else, he would create a project and set his own project as a master project over the sub-project.  This would allow a person to use the “Divide and Conquer” technique on large projects.
+\end{itemize}
+
+Synchronization Server: The users application will periodically synchronize with the database to get project information.  The database will keep track of what computer the entry was made.  At each synchronization, the server will re-assign project numbers if needed.  If there are duplicate entries on the client and server, the synchronization program will prompt the user, and he will be able to decide which entry to keep.  For example, If I create a project on my PC and modify the project on my PDA, then modify it separately on my PC, both projects will have the same number but conflicting information.  The application will prompt the user and say this project has been modified on both systems since last synchronization.  Which entry do you want to keep?  This would also mean that the Synchronization server would have to keep a log of each PDA it synchronized with and the time of last synchronization.  Also each record would have to have a modified user, and a modified timestamp so that the server can check which records have been modified since last synchronization.
+
+\section{Functional Requirements}
+Back-End - .NET framework, C\# language.
+\newline
+Font-End - BootStrap. possibly ASP.NET?, ASP.NET MVC, React, React Redux, JavaScript.
+\newline
+Database -  SQL possibly MongoDB.
+
+\chapter{Other Nonfunctional Requirements}
+
+\section{Performance Requirements}
+When not accessing the server, a typical modern PC (like those found in the University of Utah EMCB 130 lab) running the client software should have no noticeable lag (i.e. less than 1/10 second) in retrieving data that is stored locally.  When pulling data from the server, average response time to bring up information regarding a particular project should be no more than two seconds.  The PC's stored data files should consume no more than 100 MB, regardless of the overall size of the database or the number of projects assigned to any given user.  The PocketPC's stored data files should consume no more than 10 MB.  The database is expected to grow proportionally to the number of Project and project items that have been created, and the amount of data entered for each.
+
+\section{Security Requirements}
+Only registered users can enter the website. The login functionality will be handled using third party software
+
+\section{Software Quality Attributes}
+Database, logical and also UI tests will be made for main functionality. 
+
+\chapter{Bibliography}
+\begin{itemize}
+    \item Latex Template by Md. Yasmi Tohabar and Akaash
+    \item
+\end{itemize}
+
+\end{document}
