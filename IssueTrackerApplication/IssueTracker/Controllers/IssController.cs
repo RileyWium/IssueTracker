@@ -16,9 +16,32 @@ namespace IssueTracker.Controllers
         private WitContext db = new WitContext();
 
         // GET: Iss
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string searchString)
         {
-            return View(db.Issues.ToList());
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+            var issues = from i in db.Issues
+                            select i;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                issues = issues.Where(i => i.IssName.Contains(searchString));
+            }
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    issues = issues.OrderByDescending(i => i.IssName);
+                    break;
+                case "Date":
+                    issues = issues.OrderBy(i => i.CreationDate);
+                    break;
+                case "date_desc":
+                    issues = issues.OrderByDescending(i => i.CreationDate);
+                    break;
+                default:
+                    issues = issues.OrderBy(i => i.IssName);
+                    break;
+            }
+            return View(issues.ToList());
         }
 
         // GET: Iss/Details/5
@@ -47,15 +70,21 @@ namespace IssueTracker.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,ProjID,IssName,CreationDate,IssDescription")] IssueModel issueModel)
+        public ActionResult Create([Bind(Include = "ProjID,IssName,CreationDate,IssDescription")] IssueModel issueModel)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Issues.Add(issueModel);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Issues.Add(issueModel);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
             }
-
+            catch(DataException excep)
+            {
+                ModelState.AddModelError("", "Error: " + excep + " Unable to save changes.");
+            }
             return View(issueModel);
         }
 
@@ -77,25 +106,41 @@ namespace IssueTracker.Controllers
         // POST: Iss/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,ProjID,IssName,CreationDate,IssDescription")] IssueModel issueModel)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(issueModel).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(issueModel);
-        }
-
-        // GET: Iss/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult EditPost(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var issueToUpdate = db.Issues.Find(id);
+            if(TryUpdateModel(issueToUpdate,"",
+                new string[] { "ProjID","IssName","CreationDate","IssDescription" }))
+            {
+                try
+                {
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                catch (DataException)
+                {
+                    ModelState.AddModelError("", "Unable to save changes.");                
+                }
+            }
+            return View(issueToUpdate);
+        }
+
+        // GET: Iss/Delete/5
+        public ActionResult Delete(int? id, bool? saveChangesError=false)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            if (saveChangesError.GetValueOrDefault()) 
+            {
+                ViewBag.ErrorMessage = "Delete failed. Try Again.";
             }
             IssueModel issueModel = db.Issues.Find(id);
             if (issueModel == null)
@@ -105,14 +150,21 @@ namespace IssueTracker.Controllers
             return View(issueModel);
         }
 
-        // POST: Iss/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult Delete(int id)
         {
-            IssueModel issueModel = db.Issues.Find(id);
-            db.Issues.Remove(issueModel);
-            db.SaveChanges();
+            try
+            {
+                IssueModel issue = db.Issues.Find(id);
+                db.Issues.Remove(issue);
+                db.SaveChanges();
+            }
+            catch (DataException)
+            {
+                return RedirectToAction
+                    ("Delete", new { id = id, saveChangesError = true });
+            }
             return RedirectToAction("Index");
         }
 
