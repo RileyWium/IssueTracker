@@ -11,19 +11,17 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div class="navbar">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                @Html.ActionLink("Wium Issue Tracker", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-
-                <ul class="nav navbar topnav">
-                    <li>@Html.ActionLink("Projects", "Index", "Home", new { area =""}, new { @class = "btn btn-primary" })</li>
-                    <li>@Html.ActionLink("Issues", "Index", "Iss", new { area =""}, new { @class = "btn btn-primary" })</li>
-                    <li>@Html.ActionLink("Courses", "Index", "Course")</li>
-                    <li>@Html.ActionLink("Instructors", "Index", "Instructor")</li>
-                    <li>@Html.ActionLink("Departments", "Index", "Department")</li>
-                </ul>
-            </div>            
+    <div class="navbar topnav container-fluid">
+        <div>               
+            <ul class="nav navbar">
+                <li>@Html.ActionLink("Wium Issue Tracker", "Index", "Home", new { area = "" }, new { @class = "btn btn-primary" })</li>
+                <li>@Html.ActionLink("Projects", "Index", "Home", new { area = "" }, new { @class = "btn btn-primary" })</li>
+                <li>@Html.ActionLink("Issues", "Index", "Iss", new { area = "" }, new { @class = "btn btn-primary" })</li>
+                <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "btn btn-primary" })</li>
+            </ul>              
+        </div>
+        <div>
+             @Html.ActionLink("Logout", "Index", "Home", new { area = "" }, new { @class = "btn btn-primary" })
         </div>
     </div>
 
@@ -31,7 +29,10 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - Wium Issue Tracker</p>
+            <p>&copy; @DateTime.Now.Year - Wium Issue Tracker -
+                <a href="mailto:RWDeveloperContact@gmail.com?subject=WIT_Feedback_Report" target="_top">Send Feedback Report</a>    
+            </p>
+            <b> testin out b tag</b>
         </footer>
     </div>
 

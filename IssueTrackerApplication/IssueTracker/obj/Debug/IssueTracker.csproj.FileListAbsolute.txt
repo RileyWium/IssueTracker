@@ -80,3 +80,7 @@ D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\obj\Debug\IssueTrack
 D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\obj\Debug\IssueTracker.dll
 D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\obj\Debug\IssueTracker.pdb
 D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\obj\Debug\IssueTracker.csprojAssemblyReference.cache
+D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\bin\PagedList.dll
+D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\bin\PagedList.Mvc.dll
+D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\bin\PagedList.xml
+D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\bin\PagedList.Mvc.xml

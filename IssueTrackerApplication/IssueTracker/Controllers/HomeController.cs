@@ -16,7 +16,11 @@ namespace IssueTracker.Controllers
            
             return View();
         }
-       
+        public ActionResult About()
+        {
+            ViewBag.Message = "Description page.";
 
+            return View();
+        }
     }
 }

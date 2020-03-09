@@ -25,23 +25,20 @@ textarea {
 .topnav {
     overflow: hidden;
     background-color: #333;
+    /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    background-color: #444;
+    padding: 10px 10px;
+    font-size: 30px;
+    line-height: 20px;
+    font-weight: bold;    
+    */
 }
 
-.topnav button {
+.topnav li {
     float: left;
     color: #f2f2f2;
     text-align: center;
-    padding: 14px 16px;
+    padding: 0px 5px;
     text-decoration: none;
-    font-size: 17px;
-}
-
-.topnav button:hover {
-    background-color: #ddd;
-    color: black;
-}
-
-.topnav button.active {
-    background-color: #4CAF50;
-    color: white;
+    font-size: 20px;
 }

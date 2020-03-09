@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using IssueTracker.DAL;
 using IssueTracker.Models;
+using PagedList;
 
 namespace IssueTracker.Controllers
 {
@@ -16,10 +17,22 @@ namespace IssueTracker.Controllers
         private WitContext db = new WitContext();
 
         // GET: Iss
-        public ActionResult Index(string sortOrder, string searchString)
+        public ViewResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
+            ViewBag.CurrentSort = sortOrder;
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+           
+            if(searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+            ViewBag.CurrentFilter = searchString;
+
             var issues = from i in db.Issues
                             select i;
             if (!String.IsNullOrEmpty(searchString))
@@ -41,7 +54,10 @@ namespace IssueTracker.Controllers
                     issues = issues.OrderBy(i => i.IssName);
                     break;
             }
-            return View(issues.ToList());
+
+            int pageSize = 4;
+            int pageNumber = (page ?? 1);
+            return View(issues.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Iss/Details/5
