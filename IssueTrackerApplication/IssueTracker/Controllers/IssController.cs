@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using IssueTracker.DAL;
 using IssueTracker.Models;
 using PagedList;
+using System.Data.Entity.Infrastructure;
 
 namespace IssueTracker.Controllers
 {
@@ -97,7 +98,7 @@ namespace IssueTracker.Controllers
                     return RedirectToAction("Index");
                 }
             }
-            catch(DataException excep)
+            catch(RetryLimitExceededException excep)
             {
                 ModelState.AddModelError("", "Error: " + excep + " Unable to save changes.");
             }
@@ -139,7 +140,7 @@ namespace IssueTracker.Controllers
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
-                catch (DataException)
+                catch (RetryLimitExceededException)
                 {
                     ModelState.AddModelError("", "Unable to save changes.");                
                 }
@@ -157,6 +158,7 @@ namespace IssueTracker.Controllers
             if (saveChangesError.GetValueOrDefault()) 
             {
                 ViewBag.ErrorMessage = "Delete failed. Try Again.";
+                
             }
             IssueModel issueModel = db.Issues.Find(id);
             if (issueModel == null)
@@ -176,7 +178,7 @@ namespace IssueTracker.Controllers
                 db.Issues.Remove(issue);
                 db.SaveChanges();
             }
-            catch (DataException)
+            catch (RetryLimitExceededException)
             {
                 return RedirectToAction
                     ("Delete", new { id = id, saveChangesError = true });
