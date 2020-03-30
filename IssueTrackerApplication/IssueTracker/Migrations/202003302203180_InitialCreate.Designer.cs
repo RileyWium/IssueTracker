@@ -13,7 +13,7 @@ namespace IssueTracker.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202003200037025_InitialCreate"; }
+            get { return "202003302203180_InitialCreate"; }
         }
         
         string IMigrationMetadata.Source
