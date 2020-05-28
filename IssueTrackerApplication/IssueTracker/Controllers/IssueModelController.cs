@@ -13,17 +13,17 @@ using System.Data.Entity.Infrastructure;
 
 namespace IssueTracker.Controllers
 {
-    public class IssController : Controller
+    public class IssueModelController : Controller
     {
         private WitContext db = new WitContext();
 
-        // GET: Iss
-        public ViewResult Index(string sortOrder, string currentFilter, string searchString, int? page)
+        // GET: IssueModel
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
             ViewBag.CurrentSort = sortOrder;
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
-           
+
             if(searchString != null)
             {
                 page = 1;
@@ -33,9 +33,9 @@ namespace IssueTracker.Controllers
                 searchString = currentFilter;
             }
             ViewBag.CurrentFilter = searchString;
-
+            //var issues = db.Issues.Include(i => i.Projects);
             var issues = from i in db.Issues
-                            select i;
+                         select i;
             if (!String.IsNullOrEmpty(searchString))
             {
                 issues = issues.Where(i => i.IssName.Contains(searchString));
@@ -46,22 +46,21 @@ namespace IssueTracker.Controllers
                     issues = issues.OrderByDescending(i => i.IssName);
                     break;
                 case "Date":
-                    issues = issues.OrderBy(i => i.CreationDate);
+                    issues = issues.OrderBy(i => i.ReportDate);
                     break;
                 case "date_desc":
-                    issues = issues.OrderByDescending(i => i.CreationDate);
+                    issues = issues.OrderByDescending(i => i.ReportDate);
                     break;
                 default:
                     issues = issues.OrderBy(i => i.IssName);
                     break;
             }
-
-            int pageSize = 4;
+            int pageSize = 5;
             int pageNumber = (page ?? 1);
-            return View(issues.ToPagedList(pageNumber, pageSize));
+            return View(issues.ToPagedList(pageNumber,pageSize));
         }
 
-        // GET: Iss/Details/5
+        // GET: IssueModel/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -76,18 +75,21 @@ namespace IssueTracker.Controllers
             return View(issueModel);
         }
 
-        // GET: Iss/Create
+        // GET: IssueModel/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         public ActionResult Create()
         {
+            //ViewBag.ProjID = new SelectList(db.Projects, "ID", "ProjName");
             return View();
         }
 
-        // POST: Iss/Create
+        // POST: IssueModel/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ProjID,IssName,CreationDate,IssDescription")] IssueModel issueModel)
+        public ActionResult Create([Bind(Include = "ProjID,IssName,ReportDate,IssDescription,IssStatus,IssPriority")] IssueModel issueModel)
         {
             try
             {
@@ -98,14 +100,14 @@ namespace IssueTracker.Controllers
                     return RedirectToAction("Index");
                 }
             }
-            catch(RetryLimitExceededException excep)
+            catch (RetryLimitExceededException excep)
             {
-                ModelState.AddModelError("", "Error: " + excep + " Unable to save changes.");
-            }
+                ModelState.AddModelError("", "Error: " + excep + " Unable to save change.");
+            }            
             return View(issueModel);
         }
 
-        // GET: Iss/Edit/5
+        // GET: IssueModel/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -117,10 +119,11 @@ namespace IssueTracker.Controllers
             {
                 return HttpNotFound();
             }
+           
             return View(issueModel);
         }
 
-        // POST: Iss/Edit/5
+        // POST: IssueModel/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost, ActionName("Edit")]
@@ -132,8 +135,9 @@ namespace IssueTracker.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var issueToUpdate = db.Issues.Find(id);
-            if(TryUpdateModel(issueToUpdate,"",
-                new string[] { "ProjID","IssName","CreationDate","IssDescription" }))
+            if (TryUpdateModel(issueToUpdate, "",
+                new string[] { "ProjID", "IssName", "ReportDat", 
+                    "IssDescription", "IssStatus", "IssPriority" }))
             {
                 try
                 {
@@ -142,23 +146,22 @@ namespace IssueTracker.Controllers
                 }
                 catch (RetryLimitExceededException)
                 {
-                    ModelState.AddModelError("", "Unable to save changes.");                
+                    ModelState.AddModelError("", "Unable to save changes.");
                 }
             }
             return View(issueToUpdate);
         }
 
-        // GET: Iss/Delete/5
+        // GET: IssueModel/Delete/5
         public ActionResult Delete(int? id, bool? saveChangesError=false)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            if (saveChangesError.GetValueOrDefault()) 
+            if (saveChangesError.GetValueOrDefault())
             {
                 ViewBag.ErrorMessage = "Delete failed. Try Again.";
-                
             }
             IssueModel issueModel = db.Issues.Find(id);
             if (issueModel == null)
@@ -167,6 +170,18 @@ namespace IssueTracker.Controllers
             }
             return View(issueModel);
         }
+
+        // POST: IssueModel/Delete/5
+        /*
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            IssueModel issueModel = db.Issues.Find(id);
+            db.Issues.Remove(issueModel);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }*/
 
         [HttpPost]
         [ValidateAntiForgeryToken]

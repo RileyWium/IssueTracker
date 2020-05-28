@@ -11,11 +11,11 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.ProjID)
+            @Html.DisplayNameFor(model => model.Project.ProjName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ProjID)
+            @Html.DisplayFor(model => model.Project.ProjName)
         </dd>
 
         <dt>
@@ -27,11 +27,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.CreationDate)
+            @Html.DisplayNameFor(model => model.ReportDate)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.CreationDate)
+            @Html.DisplayFor(model => model.ReportDate)
         </dd>
 
         <dt>
@@ -40,6 +40,22 @@
 
         <dd>
             @Html.DisplayFor(model => model.IssDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IssStatus)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IssStatus)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IssPriority)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IssPriority)
         </dd>
 
     </dl>
