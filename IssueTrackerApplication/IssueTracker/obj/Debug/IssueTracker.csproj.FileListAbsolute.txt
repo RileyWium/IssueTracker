@@ -86,3 +86,5 @@ D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\bin\PagedList.Mvc.xm
 D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\obj\Debug\IssueTracker.csprojAssemblyReference.cache
 D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\obj\Debug\IssueTracker.Migrations.InitialCreate.resources
 D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\obj\Debug\IssueTracker.csproj.GenerateResource.cache
+D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\obj\Debug\IssueTracker.Migrations.MaxLengthOnNames.resources
+D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\obj\Debug\IssueTracker.Migrations.NonNullPriorityAndStatus.resources

@@ -1,0 +1,188 @@
+image button:
+<button class="btn btn-default">
+     <img src="http://i.stack.imgur.com/e2S63.png" width="20" /> Sign In with Facebook
+</button>
+
+icon button: (first link to this cool font website)
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" 
+          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+   
+ <i class="fas fa-car"></i>
+
+<button onclick="location.href='@Url.Action("About", "Home")'" class="btn btn-block btn-dark">Cancel</button>
+
+buttons styles:
+<a class="btn btn-primary" href="#" role="button">Link</a>
+<button class="btn btn-primary" type="submit">Button</button>
+<input class="btn btn-primary" type="button" value="Input">
+<input class="btn btn-primary" type="submit" value="Submit">
+<input class="btn btn-primary" type="reset" value="Reset">
+
+<button type="button" class="btn btn-primary btn-lg">Large button</button>
+<button type="button" class="btn btn-secondary btn-lg">Large button</button>
+change to sm to make small
+
+<button type="button" class="btn btn-primary">Primary</button>
+<button type="button" class="btn btn-secondary">Secondary</button>
+<button type="button" class="btn btn-success">Success</button>
+<button type="button" class="btn btn-danger">Danger</button>
+<button type="button" class="btn btn-warning">Warning</button>
+<button type="button" class="btn btn-info">Info</button>
+<button type="button" class="btn btn-light">Light</button>
+<button type="button" class="btn btn-dark">Dark</button>
+<button type="button" class="btn btn-link">Link</button>
+
+text box
+<input type="text" id="Textbox" name="Textbox" maxlength="10" />
+
+<form action="/action_page.php">
+First name: <input type="text" name="FirstName" value="Mickey"><br>
+Last name: <input type="text" name="LastName" value="Mouse"><br>
+<input type="submit" value="Submit">
+</form>
+
+modal prompt
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Activate Bootstrap 4 Modals via Data Attributes</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<style>
+    .bs-example{
+    	margin: 20px;
+    }
+</style>
+</head>
+<body>
+<div class="bs-example">
+    <!-- Button HTML (to Trigger Modal) -->
+    <a href="#myModal" role="button" class="btn btn-lg btn-primary" data-toggle="modal">Launch Demo Modal</a>
+
+    <!-- Modal HTML -->
+    <div id="myModal" class="modal fade" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirmation</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>Do you want to save changes to this document before closing?</p>
+                    <p class="text-secondary"><small>If you don't save, your changes will be lost.</small></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+Original asp.net mvc nav bar
+<div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <i class="fas fa-car"></i>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <!-- <li>@Html.ActionLink("Contact", "Contact", "Home")</li>-->
+                </ul>
+            </div>
+        </div>
+    </div>
+</html>   
+
+Tables:
+<table> to begin table
+<tr> table row
+<th> table head - default bold and centered
+<td> table data/cell
+
+<dl> description list
+<dt> defines terms/names
+<dd> describes term/name    
+
+less dependant scripting:
+
+<a href="backuplink.html" class="doSomething">Click!</a>
+...
+
+$('a.doSomething').click(function(){
+    // Do something here!
+    alert('You did something, woo hoo!');
+});
+...    
+
+Some Jquery
+$(document); // Activate jQuery for object
+$('#mydiv')  // Element with ID "mydiv"
+$('p.first') // P tags with class first.
+$('p[title="Hello"]') // P tags with title "Hello"
+$('p[title^="H"]') // P tags title starting with H     
+
+$(document).ready(function()
+{
+    alert('Hello World');
+});
+
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(@Html.DisplayFor(modelItem => item.ProjectName).ToString(), "IssueTracker", "Home")
+                <br />
+                @Html.ActionLink(item.ProjectName, "IssueTracker", "Home")
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProjectKey)
+            </td>
+            <td>
+                <a>@String.Format("{0}", item.ProjectKey)</a>
+            </td>
+        </tr>
+    }    
+
+
+public partial class App_user
+{
+    public int id { get; set; }
+    public string name { get; set; }
+    public string email_address { get; set; }
+    public string password { get; set; }
+    public int user_type { get; set; }
+    public virtual ICollection<User_Role> UserRoles { get; set; }
+}
+
+public partial class Role
+{
+    public int id { get; set; }
+    public string name { get; set; }
+    public virtual ICollection<User_Role> UserRoles { get; set; }
+}
+
+public partial class User_role
+{
+    [Key, ForeignKey("App_user"), Column(Order = 0)]
+    public int user_id { get; set; }
+    [Key, ForeignKey("Role"), Column(Order = 1)]
+    public int role_id { get; set; }
+    public virtual Role Role { get; set; }
+    public virtual App_user App_user { get; set; }
+}      

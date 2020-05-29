@@ -151,6 +151,14 @@
     <Compile Include="Migrations\202004212121423_InitialCreate.designer.cs">
       <DependentUpon>202004212121423_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202005122159155_MaxLengthOnNames.cs" />
+    <Compile Include="Migrations\202005122159155_MaxLengthOnNames.designer.cs">
+      <DependentUpon>202005122159155_MaxLengthOnNames.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005131946532_NonNullPriorityAndStatus.cs" />
+    <Compile Include="Migrations\202005131946532_NonNullPriorityAndStatus.designer.cs">
+      <DependentUpon>202005131946532_NonNullPriorityAndStatus.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\IssueModel.cs" />
     <Compile Include="Models\ProjectModel.cs" />
@@ -324,6 +332,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202004212121423_InitialCreate.resx">
       <DependentUpon>202004212121423_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005122159155_MaxLengthOnNames.resx">
+      <DependentUpon>202005122159155_MaxLengthOnNames.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005131946532_NonNullPriorityAndStatus.resx">
+      <DependentUpon>202005131946532_NonNullPriorityAndStatus.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
