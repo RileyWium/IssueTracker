@@ -83,8 +83,7 @@ D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\bin\PagedList.dll
 D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\bin\PagedList.Mvc.dll
 D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\bin\PagedList.xml
 D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\bin\PagedList.Mvc.xml
-D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\obj\Debug\IssueTracker.csprojAssemblyReference.cache
-D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\obj\Debug\IssueTracker.Migrations.InitialCreate.resources
+D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\obj\Debug\IssueTracker.Migrations.InitDB.resources
 D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\obj\Debug\IssueTracker.csproj.GenerateResource.cache
-D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\obj\Debug\IssueTracker.Migrations.MaxLengthOnNames.resources
-D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\obj\Debug\IssueTracker.Migrations.NonNullPriorityAndStatus.resources
+D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\obj\Debug\IssueTracker.csprojAssemblyReference.cache
+D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\obj\Debug\IssueTracker.Migrations.MastPermProjects.resources

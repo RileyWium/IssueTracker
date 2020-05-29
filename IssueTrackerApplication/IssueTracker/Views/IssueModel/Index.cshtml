@@ -8,10 +8,11 @@
 }
 
 <h2>Project Issues</h2>
+
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-@using (Html.BeginForm("Index","Iss",FormMethod.Get))
+@using (Html.BeginForm("Index", "IssueModel", FormMethod.Get))
 {
     <p>
         Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
@@ -26,25 +27,30 @@
 
         </th>
         <th>
-            @Html.ActionLink("Creation Date", "Index", new { sortOrder = ViewBag.DateSortParm , currentFilter=ViewBag.CurrentFilter})
+            @Html.ActionLink("Report Date", "Index", new { sortOrder = ViewBag.DateSortParm , currentFilter=ViewBag.CurrentFilter})
         </th>
     </tr>
-
 
     @foreach (var item in Model)
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.ProjID)
+                @Html.DisplayFor(modelItem => item.Project.ProjName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.IssName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CreationDate)
+                @Html.DisplayFor(modelItem => item.ReportDate)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.IssDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IssStatus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IssPriority)
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
@@ -57,5 +63,5 @@
 </table>
 <br />
 Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-@Html.PagedListPager(Model, page=>Url.Action("Index",
-    new {page, sortOrder = ViewBag.CurrentSort, currentFilter =ViewBag.CurrentFilter}))
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

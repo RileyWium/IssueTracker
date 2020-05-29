@@ -1,81 +1,59 @@
 ﻿namespace IssueTracker.Migrations
 {
-    using System;
     using IssueTracker.Models;
+    using IssueTracker.DAL;
+    using System;
     using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<IssueTracker.DAL.WitContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<WitContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
-        protected override void Seed(IssueTracker.DAL.WitContext context)
+
+        protected override void Seed(WitContext context)
         {
             var users = new List<UserModel>
             {
-                new UserModel {ID = 1111, UserName = "Riley"},
-                new UserModel {ID = 2222, UserName = "Ray"},
-                new UserModel {ID = 3333, UserName = "Tina"},
-                new UserModel {ID = 4444, UserName = "Sarah"}
+                new UserModel{UserName ="Riley"},
+                new UserModel{UserName = "Sarah"}
             };
-            users.ForEach(s => context.Users.AddOrUpdate(p => p.ID, s));
+            users.ForEach(u => context.Users.AddOrUpdate(x => x.UserName, u));
             context.SaveChanges();
 
             var projects = new List<ProjectModel>
             {
-                new ProjectModel {CreatorID = users.Single(s => s.UserName =="Riley").ID,
-                    ProjName = "ProjRi1"
-                },
-                new ProjectModel {CreatorID = users.Single(s => s.UserName =="Riley").ID,
-                    ProjName = "ProjRi2"
-                },
-                new ProjectModel {CreatorID = users.Single(s => s.UserName =="Ray").ID,
-                    ProjName = "ProjRay1"
-                },
-                new ProjectModel {CreatorID = users.Single(s => s.UserName =="Ray").ID,
-                    ProjName = "ProjRay2"
-                },
-                new ProjectModel {CreatorID = users.Single(s => s.UserName =="Tina").ID,
-                    ProjName = "ProjT1"
-                }
+                new ProjectModel{ProjName="PrjR1", Users = new List<UserModel>()}
             };
-            projects.ForEach(s => context.Projects.AddOrUpdate(p => p.ID, s));
+            projects.ForEach(p => context.Projects.AddOrUpdate(x => x.ProjName, p));
+            context.SaveChanges();
+
+            AddOrUpdateUser(context, "PrjR1", "Riley");
             context.SaveChanges();
 
             var issues = new List<IssueModel>
             {
-                new IssueModel {ProjID = projects.Single(s => s.ProjName =="ProjRi1").ID,
-                    IssName = "PRi1I1", CreationDate = DateTime.Parse("2005-05-05"),
-                    IssDescription ="Alexander", IssStatus = Status.Open, IssPriority = Priority.Medium
-                },
-                new IssueModel {ProjID = projects.Single(s => s.ProjName =="ProjRi1").ID,
-                    IssName = "PRi1I2", CreationDate = DateTime.Parse("2005-05-05"),
-                    IssDescription ="Alexander", IssStatus = Status.Open, IssPriority = Priority.Medium
-                },
-                new IssueModel {ProjID = projects.Single(s => s.ProjName =="ProjRi2").ID,
-                    IssName = "PRi2I1", CreationDate = DateTime.Parse("2005-05-05"),
-                    IssDescription ="Alexander", IssStatus = Status.Open, IssPriority = Priority.Medium
-                },
-                new IssueModel {ProjID = projects.Single(s => s.ProjName =="ProjRi1").ID,
-                    IssName = "PRi1I3", CreationDate = DateTime.Parse("2005-05-05"),
-                    IssDescription ="Alexander",  IssStatus = Status.Open, IssPriority = Priority.Medium
-                },
-                new IssueModel {ProjID = projects.Single(s => s.ProjName =="ProjRay1").ID,
-                    IssName = "PRay1I1", CreationDate = DateTime.Parse("2005-05-05"),
-                    IssDescription ="Alexander", IssStatus = Status.Open, IssPriority = Priority.Medium
-                },
-                new IssueModel {ProjID = projects.Single(s => s.ProjName =="ProjRay2").ID,
-                    IssName = "PRay2I1", CreationDate = DateTime.Parse("2005-05-05"),
-                    IssDescription ="Alexander",  IssStatus = Status.Open, IssPriority = Priority.Medium
-                }
+                new IssueModel{ProjID=1, IssName ="PR1I1", ReportDate = DateTime.Parse("2004-03-02"),
+                IssDescription="Ri", IssAssignee = users.Single(u =>u.ID ==1),
+                IssReporter = users.Single(u =>u.ID ==1),
+                IssStatus=Status.Open, IssPriority=Priority.Medium}
             };
-            issues.ForEach(s => context.Issues.AddOrUpdate(p => p.ID, s));
+            issues.ForEach(i => context.Issues.AddOrUpdate(x => x.IssName, i));
             context.SaveChanges();
-        }
 
+        }
+        void AddOrUpdateUser(WitContext context, string projectName, string userName)
+        {
+            var prj = context.Projects.SingleOrDefault(p => p.ProjName == projectName);
+            var usr = prj.Users.SingleOrDefault(u => u.UserName == userName);
+            if (usr == null)
+            {
+                prj.Users.Add(context.Users.Single(u => u.UserName == userName));
+            }
+        }
     }
 }

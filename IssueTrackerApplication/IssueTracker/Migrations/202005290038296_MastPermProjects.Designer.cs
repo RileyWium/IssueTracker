@@ -7,13 +7,13 @@ namespace IssueTracker.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.0")]
-    public sealed partial class MaxLengthOnNames : IMigrationMetadata
+    public sealed partial class MastPermProjects : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(MaxLengthOnNames));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(MastPermProjects));
         
         string IMigrationMetadata.Id
         {
-            get { return "202005122159155_MaxLengthOnNames"; }
+            get { return "202005290038296_MastPermProjects"; }
         }
         
         string IMigrationMetadata.Source
