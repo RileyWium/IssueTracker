@@ -1,0 +1,50 @@
+﻿@model IssueTracker.Models.IssueModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>IssueModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ProjID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProjID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IssName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IssName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreationDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreationDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IssDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IssDescription)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

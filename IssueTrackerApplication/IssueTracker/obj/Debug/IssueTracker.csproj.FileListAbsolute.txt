@@ -51,6 +51,8 @@ D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\bin\roslyn\vbc.rsp
 D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\bin\roslyn\VBCSCompiler.exe
 D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\bin\roslyn\VBCSCompiler.exe.config
 D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\bin\Antlr3.Runtime.dll
+D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\bin\EntityFramework.dll
+D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\bin\EntityFramework.SqlServer.dll
 D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\bin\Microsoft.Web.Infrastructure.dll
 D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\bin\Newtonsoft.Json.dll
@@ -62,6 +64,8 @@ D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\bin\System.Web.WebPa
 D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\bin\System.Web.WebPages.dll
 D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\bin\System.Web.WebPages.Razor.dll
 D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\bin\WebGrease.dll
+D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\bin\EntityFramework.xml
+D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\bin\EntityFramework.SqlServer.xml
 D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\bin\Newtonsoft.Json.xml
 D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\bin\System.Web.Helpers.xml
 D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\bin\System.Web.Mvc.xml
@@ -72,7 +76,11 @@ D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\bin\System.Web.WebPa
 D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\bin\System.Web.WebPages.Razor.xml
 D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\bin\Antlr3.Runtime.pdb
 D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\obj\Debug\IssueTracker.csprojAssemblyReference.cache
 D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\obj\Debug\IssueTracker.csproj.CopyComplete
 D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\obj\Debug\IssueTracker.dll
 D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\obj\Debug\IssueTracker.pdb
+D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\obj\Debug\IssueTracker.csprojAssemblyReference.cache
+D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\bin\PagedList.dll
+D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\bin\PagedList.Mvc.dll
+D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\bin\PagedList.xml
+D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\bin\PagedList.Mvc.xml
