@@ -27,7 +27,7 @@
 
             var projects = new List<ProjectModel>
             {
-                new ProjectModel{ProjName="PrjR1",Users = new List<UserModel>()}
+                new ProjectModel{ProjName="PrjR1", Users = new List<UserModel>()}
             };
             projects.ForEach(p => context.Projects.AddOrUpdate(x => x.ProjName, p));
             context.SaveChanges();

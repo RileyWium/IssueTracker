@@ -151,6 +151,10 @@
     <Compile Include="Migrations\202005282010298_InitDB.designer.cs">
       <DependentUpon>202005282010298_InitDB.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202005290038296_MastPermProjects.cs" />
+    <Compile Include="Migrations\202005290038296_MastPermProjects.designer.cs">
+      <DependentUpon>202005290038296_MastPermProjects.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\IssueModel.cs" />
     <Compile Include="Models\ProjectModel.cs" />
@@ -324,6 +328,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202005282010298_InitDB.resx">
       <DependentUpon>202005282010298_InitDB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005290038296_MastPermProjects.resx">
+      <DependentUpon>202005290038296_MastPermProjects.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

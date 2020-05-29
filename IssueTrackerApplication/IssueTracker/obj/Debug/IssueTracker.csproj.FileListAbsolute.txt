@@ -86,3 +86,4 @@ D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\bin\PagedList.Mvc.xm
 D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\obj\Debug\IssueTracker.Migrations.InitDB.resources
 D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\obj\Debug\IssueTracker.csproj.GenerateResource.cache
 D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\obj\Debug\IssueTracker.csprojAssemblyReference.cache
+D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\obj\Debug\IssueTracker.Migrations.MastPermProjects.resources

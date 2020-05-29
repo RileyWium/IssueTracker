@@ -15,6 +15,7 @@ namespace IssueTracker.Models
         [Key]
         public int ProjectID { get; set; }
 
+
         [Display(Name ="Project Name")]
         [StringLength(60, ErrorMessage = "The {0} cannot exceed {1} characters. ", MinimumLength =1)]
         [Required(ErrorMessage ="Need a name for the Project.")]
