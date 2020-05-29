@@ -6,13 +6,22 @@ using System.ComponentModel.DataAnnotations;
 
 namespace IssueTracker.Models
 {
+
+    public enum Status
+    {
+        Open, Closed
+    }
+    public enum Priority
+    {
+        Low, Medium, High
+    }
     public class IssueModel
     {
         [DisplayAttribute(Name = "Issue ID")]
         public int ID { get; set; }
 
         [DisplayAttribute(Name = "Project ID")]
-        [Range(100000, 999999, ErrorMessage = "Need valid Project ID of six numbers.")]
+        //[Range(100000, 999999, ErrorMessage = "Need valid Project ID of six numbers.")]
         public int ProjID { get; set; }
 
         [Display(Name ="Issue Name")]
@@ -29,7 +38,10 @@ namespace IssueTracker.Models
 
         //public string IssueAssignee { get; set; } put this in later
         //public string IssueReporter { get; set; } auto set
-        //public bool IssueStatus { get; set; } put in later
-        //public string IssuePriority { get; set; } put in later
+        //question mark after Status(?) means its nullable
+        public Status? IssStatus { get; set; }//probably shouldn't be nullable
+        public Priority? IssPriority { get; set; }
+
+        public virtual ProjectModel Project { get; set; }
     }
 }

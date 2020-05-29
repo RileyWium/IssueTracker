@@ -10,7 +10,7 @@ namespace IssueTracker.DAL
 {
     public class WitContext : DbContext
     {
-        public WitContext(): base("WitContext")
+        public WitContext(): base("name=WitContext")
         {
         }
 

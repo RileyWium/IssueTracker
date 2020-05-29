@@ -12,13 +12,13 @@ namespace IssueTracker.Models
         //[DisplayAttribute(Name = "Project ID")]
         //[Range(100000,999999, ErrorMessage = "Need valid Project ID of six numbers.")]
         public int ID { get; set; }
-        public int IssID { get; set; }
-        public int UserID { get; set; }
+        public int CreatorID { get; set; }
 
         //[Display(Name ="Project Name")]
         //[StringLength(50, ErrorMessage = "The {0} cannot exceed {1} characters. ", MinimumLength =1)]
         //[Required(ErrorMessage ="You need a name for the Project.")]
         public string ProjName { get; set; }        
+        public virtual UserModel CreatorUser { get; set; }
         public virtual ICollection<UserModel> Users { get; set; }
         public virtual ICollection<IssueModel> Issues { get; set; }
     }

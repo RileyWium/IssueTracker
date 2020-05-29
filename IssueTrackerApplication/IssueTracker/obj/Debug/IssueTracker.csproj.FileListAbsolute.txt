@@ -79,8 +79,10 @@ D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\bin\Microsoft.CodeDo
 D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\obj\Debug\IssueTracker.csproj.CopyComplete
 D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\obj\Debug\IssueTracker.dll
 D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\obj\Debug\IssueTracker.pdb
-D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\obj\Debug\IssueTracker.csprojAssemblyReference.cache
 D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\bin\PagedList.dll
 D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\bin\PagedList.Mvc.dll
 D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\bin\PagedList.xml
 D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\bin\PagedList.Mvc.xml
+D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\obj\Debug\IssueTracker.csprojAssemblyReference.cache
+D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\obj\Debug\IssueTracker.Migrations.InitialCreate.resources
+D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\obj\Debug\IssueTracker.csproj.GenerateResource.cache
