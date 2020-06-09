@@ -137,6 +137,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IssueModelController.cs" />
+    <Compile Include="Controllers\ProjectModelController.cs" />
+    <Compile Include="Controllers\UserModelController.cs" />
     <Compile Include="DAL\IssueConfiguration.cs" />
     <Compile Include="DAL\IssueInterceptorLogging.cs" />
     <Compile Include="DAL\IssueInterceptorTransientErrors.cs" />
@@ -160,6 +162,7 @@
     <Compile Include="Models\ProjectModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\UserIndexData.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-grid.css" />
@@ -309,10 +312,19 @@
     <Content Include="Views\IssueModel\Details.cshtml" />
     <Content Include="Views\IssueModel\Edit.cshtml" />
     <Content Include="Views\IssueModel\Index.cshtml" />
+    <Content Include="Views\ProjectModel\Create.cshtml" />
+    <Content Include="Views\ProjectModel\Delete.cshtml" />
+    <Content Include="Views\ProjectModel\Details.cshtml" />
+    <Content Include="Views\ProjectModel\Edit.cshtml" />
+    <Content Include="Views\ProjectModel\Index.cshtml" />
+    <Content Include="Views\UserModel\Create.cshtml" />
+    <Content Include="Views\UserModel\Delete.cshtml" />
+    <Content Include="Views\UserModel\Details.cshtml" />
+    <Content Include="Views\UserModel\Edit.cshtml" />
+    <Content Include="Views\UserModel\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="ViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

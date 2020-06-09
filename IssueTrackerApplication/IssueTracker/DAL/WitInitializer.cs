@@ -11,6 +11,7 @@ namespace IssueTracker.DAL
     {
         protected override void Seed(WitContext context)
         {
+            /*
             var users = new List<UserModel>
             {
             new UserModel{UserName="Riley"},
@@ -47,6 +48,7 @@ namespace IssueTracker.DAL
             };
             issues.ForEach(i => context.Issues.Add(i));
             context.SaveChanges();            
+            */
         }
     }
 }
