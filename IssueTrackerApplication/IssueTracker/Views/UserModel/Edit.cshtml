@@ -27,6 +27,34 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
+                <table>
+                    <tr>
+                        @{ 
+                            int cnt = 0;
+                            List<IssueTracker.ViewModels.AssignedProjectData> projects = ViewBag.Projects;
+
+                            foreach(var project in projects)
+                            {
+                                if(cnt++ % 3 == 0)
+                                {
+                                    @:</tr><tr>
+                                }
+                                @:<td>
+                                    <input type="checkbox"                                    
+                                           name="selectedProjects"
+                                           value="@project.ProjectID"
+                                           @(Html.Raw(project.Assigned ? "checked=\"checked\"" : ""))/>
+                                           @project.ProjectID @: @project.Name
+                                @:</td>
+                            }
+                            @:</tr>
+                        }                    
+                </table>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </div>

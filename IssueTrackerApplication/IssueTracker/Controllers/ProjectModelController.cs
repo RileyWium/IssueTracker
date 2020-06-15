@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -38,7 +39,7 @@ namespace IssueTracker.Controllers
 
         // GET: ProjectModel/Create
         public ActionResult Create()
-        {
+        {            
             return View();
         }
 
@@ -49,13 +50,18 @@ namespace IssueTracker.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ProjectID,ProjName")] ProjectModel projectModel)
         {
-            if (ModelState.IsValid)
-            {
-                db.Projects.Add(projectModel);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+            try {
+                if (ModelState.IsValid)
+                {
+                    db.Projects.Add(projectModel);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
             }
-
+            catch (RetryLimitExceededException)
+            {
+                ModelState.AddModelError("", "Unable to save changes. Try again");
+            }
             return View(projectModel);
         }
 
@@ -77,17 +83,29 @@ namespace IssueTracker.Controllers
         // POST: ProjectModel/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ProjectID,ProjName")] ProjectModel projectModel)
+        public ActionResult EditPost(int? id)
         {
-            if (ModelState.IsValid)
+            if(id == null)
             {
-                db.Entry(projectModel).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            return View(projectModel);
+            var projectToUpdate = db.Projects.Find(id);
+            if(TryUpdateModel(projectToUpdate, "",
+                new string[] { "ProjName" }))
+            {
+                try
+                {
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                catch (RetryLimitExceededException)
+                {
+                    ModelState.AddModelError("", "Unable to save changes. Try again.");
+                }
+            }
+            return View(projectToUpdate);
         }
 
         // GET: ProjectModel/Delete/5

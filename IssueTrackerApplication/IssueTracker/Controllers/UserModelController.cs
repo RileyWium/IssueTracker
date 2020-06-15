@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using IssueTracker.DAL;
 using IssueTracker.Models;
 using IssueTracker.ViewModels;
+using System.Data.Entity.Infrastructure;
 
 namespace IssueTracker.Controllers
 {
@@ -59,6 +60,9 @@ namespace IssueTracker.Controllers
         // GET: UserModel/Create
         public ActionResult Create()
         {
+            var user = new UserModel();
+            user.Projects = new List<ProjectModel>();
+            PopulateAssignedProjectData(user);
             return View();
         }
 
@@ -67,16 +71,25 @@ namespace IssueTracker.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,UserName")] UserModel userModel)
+        public ActionResult Create([Bind(Include = "ID,UserName")] UserModel userModel, string[] selectedProjects)
         {
+            if (selectedProjects != null)
+            {
+                userModel.Projects = new List<ProjectModel>();
+                foreach(var project in selectedProjects)
+                {
+                    var projectToAdd = db.Projects.Find(int.Parse(project));
+                    userModel.Projects.Add(projectToAdd);
+                }
+            }
             if (ModelState.IsValid)
             {
                 db.Users.Add(userModel);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
-            return View(userModel);
+            PopulateAssignedProjectData(userModel);
+            return View(userModel);            
         }
 
         // GET: UserModel/Edit/5
@@ -86,7 +99,12 @@ namespace IssueTracker.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            UserModel userModel = db.Users.Find(id);
+            //UserModel userModel = db.Users.Find(id);
+            UserModel userModel = db.Users
+                .Include(u => u.Projects)
+                .Where(u => u.ID == id)
+                .Single();
+            PopulateAssignedProjectData(userModel);
             if (userModel == null)
             {
                 return HttpNotFound();
@@ -94,20 +112,86 @@ namespace IssueTracker.Controllers
             return View(userModel);
         }
 
+        private void PopulateAssignedProjectData(UserModel userModel)
+        {
+            var allProjects = db.Projects;
+            var userProjects = new HashSet<int>(userModel.Projects.Select(p => p.ProjectID));
+            var viewModel = new List<AssignedProjectData>();
+            foreach (var project in allProjects)
+            {
+                viewModel.Add(new AssignedProjectData
+                {
+                    ProjectID = project.ProjectID,
+                    Name = project.ProjName,
+                    Assigned = userProjects.Contains(project.ProjectID)
+                });
+            }
+            ViewBag.Projects = viewModel;
+        }
+
         // POST: UserModel/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,UserName")] UserModel userModel)
+        public ActionResult Edit(int? id, string[] selectedProjects)
         {
-            if (ModelState.IsValid)
+            if(id == null)
             {
-                db.Entry(userModel).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            return View(userModel);
+            var userToUpdate = db.Users
+                .Include(u => u.Projects)
+                .Where(u => u.ID == id)
+                .Single();
+
+            if (TryUpdateModel(userToUpdate, "",
+                new string[] { "UserName" }))
+            {
+                try
+                {
+                    UpdateUserProjects(selectedProjects, userToUpdate);
+
+                    db.SaveChanges();
+
+                    return RedirectToAction("Index");
+                }
+                catch (RetryLimitExceededException)
+                {
+                    ModelState.AddModelError("", "Unable to save changes. Try again.");
+                }                
+            }
+            PopulateAssignedProjectData(userToUpdate);
+            return View(userToUpdate);
+        }
+
+        private void UpdateUserProjects(string[] selectedProjects, UserModel userToUpdate)
+        {
+            if(selectedProjects == null)
+            {
+                userToUpdate.Projects = new List<ProjectModel>();
+                return;
+            }
+
+            var selectedProjectsHS = new HashSet<string>(selectedProjects);
+            var userProjects = new HashSet<int>(userToUpdate.Projects.Select(p => p.ProjectID));
+            foreach (var project in db.Projects)
+            {
+                if (selectedProjectsHS.Contains(project.ProjectID.ToString()))
+                {
+                    if (!userProjects.Contains(project.ProjectID))
+                    {
+                        userToUpdate.Projects.Add(project);
+                    }
+                }
+                else
+                {
+                    if (userProjects.Contains(project.ProjectID))
+                    {
+                        userToUpdate.Projects.Remove(project);
+                    }
+                }
+            }
         }
 
         // GET: UserModel/Delete/5
