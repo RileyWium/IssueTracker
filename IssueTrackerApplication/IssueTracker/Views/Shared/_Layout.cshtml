@@ -15,13 +15,12 @@
         <div>               
             <ul class="nav navbar">
                 <li>@Html.ActionLink("Wium Issue Tracker", "Index", "Home", new { area = "" }, new { @class = "btn btn-cust-grey" })</li>
-                <li>@Html.ActionLink("Projects", "Index", "Home", new { area = "" }, new { @class = "btn btn-cust-grey" })</li>
+                <li>@Html.ActionLink("Users", "Index","UserModel", new { area =  "" }, new { @class ="btn btn-cust-grey"})</li>
+                <li>@Html.ActionLink("Projects", "Index", "ProjectModel", new { area = "" }, new { @class = "btn btn-cust-grey" })</li>
                 <li>@Html.ActionLink("Issues", "Index", "IssueModel", new { area = "" }, new { @class = "btn btn-cust-grey" })</li>
                 <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "btn btn-cust-grey" })</li>
             </ul>              
-        </div>
-        <div>
-             @Html.ActionLink("Logout", "Index", "Home", new { area = "" }, new { @class = "btn btn-cust-grey" })
+            @Html.Partial("_LoginPartial");
         </div>
     </div>
     
@@ -32,7 +31,6 @@
             <p>&copy; @DateTime.Now.Year - Wium Issue Tracker -
                 <a href="mailto:RWDeveloperContact@gmail.com?subject=WIT_Feedback_Report" target="_top">Send Feedback Report</a>    
             </p>
-            <b> testin out b tag</b>
         </footer>
     </div>
 
