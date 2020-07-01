@@ -17,6 +17,7 @@
 
         protected override void Seed(WitContext context)
         {
+            
             var users = new List<UserModel>
             {
                 new UserModel{UserName ="Riley"},
@@ -44,7 +45,7 @@
             };
             issues.ForEach(i => context.Issues.AddOrUpdate(x => x.IssName, i));
             context.SaveChanges();
-
+            
         }
         void AddOrUpdateUser(WitContext context, string projectName, string userName)
         {
