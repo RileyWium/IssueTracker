@@ -11,25 +11,34 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div class="navbar topnav container-fluid">
-        <div>               
-            <ul class="nav navbar">
-                <li>@Html.ActionLink("Wium Issue Tracker", "Index", "Home", new { area = "" }, new { @class = "btn btn-cust-grey" })</li>
-                <li>@Html.ActionLink("Users", "Index","UserModel", new { area =  "" }, new { @class ="btn btn-cust-grey"})</li>
-                <li>@Html.ActionLink("Projects", "Index", "ProjectModel", new { area = "" }, new { @class = "btn btn-cust-grey" })</li>
-                <li>@Html.ActionLink("Issues", "Index", "IssueModel", new { area = "" }, new { @class = "btn btn-cust-grey" })</li>
-                <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "btn btn-cust-grey" })</li>
-            </ul>              
-            @Html.Partial("_LoginPartial");
+    <div class="navbar-fixed-top topnav container-fluid">
+        <div class="navbar">
+            <span>
+                <ul class="nav">
+                    <li>@Html.ActionLink("Wium Issue Tracker", "Index", "Home", new { area = "" }, new { @class = "btn btn-cust-grey" })</li>
+                    <li>@Html.ActionLink("Users", "Index", "UserModel", new { area = "" }, new { @class = "btn btn-cust-grey" })</li>
+                    <li>@Html.ActionLink("Projects", "Index", "ProjectModel", new { area = "" }, new { @class = "btn btn-cust-grey" })</li>
+                    <li>@Html.ActionLink("Issues", "Index", "IssueModel", new { area = "" }, new { @class = "btn btn-cust-grey" })</li>
+                    <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "btn btn-cust-grey" })</li>
+                    @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+                    {
+                        <li>@Html.ActionLink("Admin", "Index", "Admin", new { area = "" }, new { @class = "btn btn-cust-grey" })</li>
+                    }
+                </ul>
+            </span>
+            <span>
+                @Html.Partial("_LoginPartial")
+            </span>
         </div>
     </div>
-    
+
     <div class="container-fluid body-content">
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - Wium Issue Tracker -
-                <a href="mailto:RWDeveloperContact@gmail.com?subject=WIT_Feedback_Report" target="_top">Send Feedback Report</a>    
+            <p>
+                &copy; @DateTime.Now.Year - Wium Issue Tracker -
+                <a href="mailto:RWDeveloperContact@gmail.com?subject=WIT_Feedback_Report" target="_top">Send Feedback Report</a>
             </p>
         </footer>
     </div>

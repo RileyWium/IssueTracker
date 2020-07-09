@@ -106,4 +106,64 @@ namespace IssueTracker
             return new ApplicationSignInManager(context.GetUserManager<ApplicationUserManager>(), context.Authentication);
         }
     }
+
+    public class ApplicationRoleManager : RoleManager<IdentityRole>
+    {
+        public ApplicationRoleManager(IRoleStore<IdentityRole, string> roleStore)
+            : base(roleStore)
+        {
+
+        }
+
+        public static ApplicationRoleManager Create(IdentityFactoryOptions<ApplicationRoleManager>
+            options, IOwinContext context)
+        {
+            return new ApplicationRoleManager(new
+                RoleStore<IdentityRole>(context.Get<ApplicationDbContext>()));
+        }
+    }
+
+    public class ApplicationDbInitializer: DropCreateDatabaseIfModelChanges<ApplicationDbContext>
+    {
+        protected override void Seed(ApplicationDbContext context)
+        {
+            InitializeIdentityForEF(context);
+            base.Seed(context);
+        }
+
+        public static void InitializeIdentityForEF(ApplicationDbContext db)
+        {
+            var userManager =
+                HttpContext.Current.GetOwinContext().GetUserManager < ApplicationUserManager>();
+            var roleManager = HttpContext.Current.GetOwinContext().Get<ApplicationRoleManager>();
+            const string name = "admin@example.com";
+            const string password = "Adm1n@example.com";
+            const string roleName = "Admin";
+
+            var role = roleManager.FindByName(roleName);
+            if (role == null)
+            {
+                role = new IdentityRole(roleName);
+                var roleresult = roleManager.Create(role);
+            }
+
+            var user =userManager.FindByName(name);
+            if(user == null)
+            {
+                user = new ApplicationUser
+                {
+                    UserName = name,
+                    Email = name
+                };
+                var result = userManager.Create(user, password);
+                result = userManager.SetLockoutEnabled(user.Id, false);
+            }
+
+            var rolesForUser = userManager.GetRoles(user.Id);
+            if (!rolesForUser.Contains(role.Name))
+            {
+                var result = userManager.AddToRole(user.Id, role.Name);
+            }
+        }
+    }
 }

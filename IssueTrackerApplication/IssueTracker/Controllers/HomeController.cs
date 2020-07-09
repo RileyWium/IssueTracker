@@ -12,8 +12,7 @@ namespace IssueTracker.Controllers
     {        
         public ActionResult Index()
         {
-            ViewBag.Message = "Project List";
-           
+                       
             return View();
         }
         public ActionResult About()

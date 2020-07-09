@@ -567,7 +567,7 @@ pre code {
 
 @media (min-width: 1200px) {
   .container {
-    max-width: 1140px;
+    max-width: 1300px;
   }
 }
 
@@ -4369,9 +4369,6 @@ input[type="button"].btn-block {
   white-space: nowrap;
 }
 
-.navbar-brand:hover, .navbar-brand:focus {
-  text-decoration: none;
-}
 
 .navbar-nav {
   display: -ms-flexbox;
