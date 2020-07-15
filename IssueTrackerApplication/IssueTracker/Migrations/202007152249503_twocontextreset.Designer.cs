@@ -6,14 +6,14 @@ namespace IssueTracker.Migrations
     using System.Data.Entity.Migrations.Infrastructure;
     using System.Resources;
     
-    [GeneratedCode("EntityFramework.Migrations", "6.4.0")]
-    public sealed partial class MastPermProjects : IMigrationMetadata
+    [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
+    public sealed partial class twocontextreset : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(MastPermProjects));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(twocontextreset));
         
         string IMigrationMetadata.Id
         {
-            get { return "202005290038296_MastPermProjects"; }
+            get { return "202007152249503_twocontextreset"; }
         }
         
         string IMigrationMetadata.Source

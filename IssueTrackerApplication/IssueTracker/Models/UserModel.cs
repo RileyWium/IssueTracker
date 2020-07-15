@@ -11,6 +11,9 @@ namespace IssueTracker.Models
     {
         //[DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int ID { get; set; }
+        [Display(Name = "User")]
+        public string IdentityID { get; set; }
+
         [Required(ErrorMessage = "User Name required.")]
         [Display(Name = "User Name")]
         [StringLength(50, ErrorMessage = "The {0} cannot exceed {1} characters. ", MinimumLength = 1)]

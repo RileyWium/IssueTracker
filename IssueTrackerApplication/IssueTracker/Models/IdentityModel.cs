@@ -5,6 +5,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
+using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace IssueTracker.Models
 {
@@ -12,12 +13,7 @@ namespace IssueTracker.Models
     public class ApplicationUser : IdentityUser
     {
 
-        public int ID { get; set; }
-        [Required(ErrorMessage = "User Name required.")]
-        [Display(Name = "First Name")]
-        [StringLength(50, ErrorMessage = "The {0} cannot exceed {1} characters. ", MinimumLength = 1)]
-        public string FirstName { get; set; }
-        public virtual ICollection<ProjectModel> Projects { get; set; }
+        public virtual UserModel User { get; set; }
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
@@ -30,12 +26,14 @@ namespace IssueTracker.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("WitContext", throwIfV1Schema: false)
+            : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
 
         static ApplicationDbContext()
         {
+            // Set the database initializer which is run once during application start
+            // This seeds the database with admin user credentials and admin role
             Database.SetInitializer<ApplicationDbContext>(new ApplicationDbInitializer());
         }
 
@@ -43,5 +41,6 @@ namespace IssueTracker.Models
         {
             return new ApplicationDbContext();
         }
+
     }
 }

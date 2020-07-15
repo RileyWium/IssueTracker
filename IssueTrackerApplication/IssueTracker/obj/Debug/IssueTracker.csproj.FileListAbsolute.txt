@@ -83,10 +83,7 @@ D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\bin\PagedList.dll
 D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\bin\PagedList.Mvc.dll
 D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\bin\PagedList.xml
 D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\bin\PagedList.Mvc.xml
-D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\obj\Debug\IssueTracker.Migrations.InitDB.resources
-D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\obj\Debug\IssueTracker.csproj.GenerateResource.cache
 D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\obj\Debug\IssueTracker.csprojAssemblyReference.cache
-D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\obj\Debug\IssueTracker.Migrations.MastPermProjects.resources
 D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\bin\Microsoft.AspNet.Identity.Core.dll
 D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\bin\Microsoft.AspNet.Identity.EntityFramework.dll
 D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\bin\Microsoft.AspNet.Identity.Owin.dll
@@ -112,3 +109,7 @@ D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\bin\Microsoft.Owin.S
 D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\bin\Microsoft.Owin.Security.OAuth.xml
 D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\bin\Microsoft.Owin.Security.Twitter.xml
+D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\obj\Debug\IssueTracker.Migrations.InitialDatabase.resources
+D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\obj\Debug\IssueTracker.csproj.GenerateResource.cache
+D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\obj\Debug\IssueTracker.Migrations.twocontextreset.resources
+D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\obj\Debug\IssueTracker.Migrations.update_user_fields.resources

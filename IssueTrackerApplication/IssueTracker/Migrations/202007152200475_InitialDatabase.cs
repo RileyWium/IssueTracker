@@ -3,7 +3,7 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class InitDB : DbMigration
+    public partial class InitialDatabase : DbMigration
     {
         public override void Up()
         {
@@ -34,6 +34,7 @@
                 c => new
                     {
                         ID = c.Int(nullable: false, identity: true),
+                        IdentityID = c.String(),
                         UserName = c.String(nullable: false, maxLength: 50),
                     })
                 .PrimaryKey(t => t.ID);
@@ -44,8 +45,11 @@
                     {
                         ProjectID = c.Int(nullable: false, identity: true),
                         ProjName = c.String(nullable: false, maxLength: 60),
+                        UserModel_ID = c.Int(),
                     })
-                .PrimaryKey(t => t.ProjectID);
+                .PrimaryKey(t => t.ProjectID)
+                .ForeignKey("dbo.UserModel", t => t.UserModel_ID)
+                .Index(t => t.UserModel_ID);
             
             CreateTable(
                 "dbo.ProjectModelUserModel",
@@ -67,10 +71,12 @@
             DropForeignKey("dbo.IssueModel", "ProjID", "dbo.ProjectModel");
             DropForeignKey("dbo.IssueModel", "IssReporter_ID", "dbo.UserModel");
             DropForeignKey("dbo.IssueModel", "IssAssignee_ID", "dbo.UserModel");
+            DropForeignKey("dbo.ProjectModel", "UserModel_ID", "dbo.UserModel");
             DropForeignKey("dbo.ProjectModelUserModel", "UserID", "dbo.UserModel");
             DropForeignKey("dbo.ProjectModelUserModel", "ProjectID", "dbo.ProjectModel");
             DropIndex("dbo.ProjectModelUserModel", new[] { "UserID" });
             DropIndex("dbo.ProjectModelUserModel", new[] { "ProjectID" });
+            DropIndex("dbo.ProjectModel", new[] { "UserModel_ID" });
             DropIndex("dbo.IssueModel", new[] { "IssReporter_ID" });
             DropIndex("dbo.IssueModel", new[] { "IssAssignee_ID" });
             DropIndex("dbo.IssueModel", new[] { "ProjID" });

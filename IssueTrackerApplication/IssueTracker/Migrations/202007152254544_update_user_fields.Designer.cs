@@ -6,14 +6,14 @@ namespace IssueTracker.Migrations
     using System.Data.Entity.Migrations.Infrastructure;
     using System.Resources;
     
-    [GeneratedCode("EntityFramework.Migrations", "6.4.0")]
-    public sealed partial class InitDB : IMigrationMetadata
+    [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
+    public sealed partial class update_user_fields : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(InitDB));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(update_user_fields));
         
         string IMigrationMetadata.Id
         {
-            get { return "202005282010298_InitDB"; }
+            get { return "202007152254544_update_user_fields"; }
         }
         
         string IMigrationMetadata.Source
