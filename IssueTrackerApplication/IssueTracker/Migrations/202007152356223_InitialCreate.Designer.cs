@@ -7,13 +7,13 @@ namespace IssueTracker.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class update_user_fields : IMigrationMetadata
+    public sealed partial class InitialCreate : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(update_user_fields));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(InitialCreate));
         
         string IMigrationMetadata.Id
         {
-            get { return "202007152254544_update_user_fields"; }
+            get { return "202007152356223_InitialCreate"; }
         }
         
         string IMigrationMetadata.Source

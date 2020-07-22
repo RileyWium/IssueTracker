@@ -12,6 +12,7 @@ using IssueTracker.Models;
 
 namespace IssueTracker.Controllers
 {
+    
     public class ProjectModelController : Controller
     {
         private WitContext db = new WitContext();

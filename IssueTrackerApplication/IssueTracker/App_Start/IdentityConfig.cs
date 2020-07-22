@@ -53,11 +53,11 @@ namespace IssueTracker
             // Configure validation logic for passwords
             manager.PasswordValidator = new PasswordValidator
             {
-                RequiredLength = 8,
+                RequiredLength = 6,
                 RequireNonLetterOrDigit = false,
                 RequireDigit = true,
                 RequireLowercase = true,
-                RequireUppercase = true,
+                RequireUppercase = false,
             };
 
             // Configure user lockout defaults
@@ -153,7 +153,8 @@ namespace IssueTracker
                 user = new ApplicationUser
                 {
                     UserName = name,
-                    Email = name
+                    Email = name,
+                    MainName = "Admin"
                 };
                 var result = userManager.Create(user, password);
                 result = userManager.SetLockoutEnabled(user.Id, false);
@@ -163,6 +164,15 @@ namespace IssueTracker
             if (!rolesForUser.Contains(role.Name))
             {
                 var result = userManager.AddToRole(user.Id, role.Name);
+            }
+
+            //create users role
+            const string userRoleName = "Users";
+            role = roleManager.FindByName(userRoleName);
+            if(role == null)
+            {
+                role = new IdentityRole(userRoleName);
+                var roleresult = roleManager.Create(role);
             }
         }
     }

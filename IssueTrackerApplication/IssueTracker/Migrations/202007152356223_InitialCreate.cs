@@ -3,17 +3,10 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class update_user_fields : DbMigration
+    public partial class InitialCreate : DbMigration
     {
         public override void Up()
         {
-            RenameTable(name: "dbo.IssueModel", newName: "IssueModels");
-            RenameTable(name: "dbo.UserModel", newName: "UserModels");
-            RenameTable(name: "dbo.ProjectModel", newName: "ProjectModels");
-            DropForeignKey("dbo.ProjectModelUserModel", "ProjectID", "dbo.ProjectModel");
-            DropForeignKey("dbo.ProjectModelUserModel", "UserID", "dbo.UserModel");
-            DropIndex("dbo.ProjectModelUserModel", new[] { "ProjectID" });
-            DropIndex("dbo.ProjectModelUserModel", new[] { "UserID" });
             CreateTable(
                 "dbo.AspNetRoles",
                 c => new
@@ -85,34 +78,76 @@
                 .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
                 .Index(t => t.UserId);
             
-            AddColumn("dbo.UserModels", "ProjectModel_ProjectID", c => c.Int());
-            AddColumn("dbo.ProjectModels", "UserModel_ID1", c => c.Int());
-            CreateIndex("dbo.UserModels", "ProjectModel_ProjectID");
-            CreateIndex("dbo.ProjectModels", "UserModel_ID1");
-            AddForeignKey("dbo.UserModels", "ProjectModel_ProjectID", "dbo.ProjectModels", "ProjectID");
-            AddForeignKey("dbo.ProjectModels", "UserModel_ID1", "dbo.UserModels", "ID");
-            DropTable("dbo.ProjectModelUserModel");
+            CreateTable(
+                "dbo.UserModels",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        IdentityID = c.String(),
+                        UserName = c.String(nullable: false, maxLength: 50),
+                        ProjectModel_ProjectID = c.Int(),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.ProjectModels", t => t.ProjectModel_ProjectID)
+                .Index(t => t.ProjectModel_ProjectID);
+            
+            CreateTable(
+                "dbo.ProjectModels",
+                c => new
+                    {
+                        ProjectID = c.Int(nullable: false, identity: true),
+                        ProjName = c.String(nullable: false, maxLength: 60),
+                        UserModel_ID = c.Int(),
+                        UserModel_ID1 = c.Int(),
+                    })
+                .PrimaryKey(t => t.ProjectID)
+                .ForeignKey("dbo.UserModels", t => t.UserModel_ID)
+                .ForeignKey("dbo.UserModels", t => t.UserModel_ID1)
+                .Index(t => t.UserModel_ID)
+                .Index(t => t.UserModel_ID1);
+            
+            CreateTable(
+                "dbo.IssueModels",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        ProjID = c.Int(nullable: false),
+                        IssName = c.String(nullable: false, maxLength: 50),
+                        ReportDate = c.DateTime(nullable: false),
+                        IssDescription = c.String(maxLength: 350),
+                        IssStatus = c.Int(nullable: false),
+                        IssPriority = c.Int(nullable: false),
+                        IssAssignee_ID = c.Int(),
+                        IssReporter_ID = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.UserModels", t => t.IssAssignee_ID)
+                .ForeignKey("dbo.UserModels", t => t.IssReporter_ID, cascadeDelete: true)
+                .ForeignKey("dbo.ProjectModels", t => t.ProjID, cascadeDelete: true)
+                .Index(t => t.ProjID)
+                .Index(t => t.IssAssignee_ID)
+                .Index(t => t.IssReporter_ID);
+            
         }
         
         public override void Down()
         {
-            CreateTable(
-                "dbo.ProjectModelUserModel",
-                c => new
-                    {
-                        ProjectID = c.Int(nullable: false),
-                        UserID = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => new { t.ProjectID, t.UserID });
-            
             DropForeignKey("dbo.AspNetUsers", "User_ID", "dbo.UserModels");
             DropForeignKey("dbo.ProjectModels", "UserModel_ID1", "dbo.UserModels");
+            DropForeignKey("dbo.ProjectModels", "UserModel_ID", "dbo.UserModels");
             DropForeignKey("dbo.UserModels", "ProjectModel_ProjectID", "dbo.ProjectModels");
+            DropForeignKey("dbo.IssueModels", "ProjID", "dbo.ProjectModels");
+            DropForeignKey("dbo.IssueModels", "IssReporter_ID", "dbo.UserModels");
+            DropForeignKey("dbo.IssueModels", "IssAssignee_ID", "dbo.UserModels");
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
+            DropIndex("dbo.IssueModels", new[] { "IssReporter_ID" });
+            DropIndex("dbo.IssueModels", new[] { "IssAssignee_ID" });
+            DropIndex("dbo.IssueModels", new[] { "ProjID" });
             DropIndex("dbo.ProjectModels", new[] { "UserModel_ID1" });
+            DropIndex("dbo.ProjectModels", new[] { "UserModel_ID" });
             DropIndex("dbo.UserModels", new[] { "ProjectModel_ProjectID" });
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
@@ -121,20 +156,14 @@
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
-            DropColumn("dbo.ProjectModels", "UserModel_ID1");
-            DropColumn("dbo.UserModels", "ProjectModel_ProjectID");
+            DropTable("dbo.IssueModels");
+            DropTable("dbo.ProjectModels");
+            DropTable("dbo.UserModels");
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetRoles");
-            CreateIndex("dbo.ProjectModelUserModel", "UserID");
-            CreateIndex("dbo.ProjectModelUserModel", "ProjectID");
-            AddForeignKey("dbo.ProjectModelUserModel", "UserID", "dbo.UserModel", "ID", cascadeDelete: true);
-            AddForeignKey("dbo.ProjectModelUserModel", "ProjectID", "dbo.ProjectModel", "ProjectID", cascadeDelete: true);
-            RenameTable(name: "dbo.ProjectModels", newName: "ProjectModel");
-            RenameTable(name: "dbo.UserModels", newName: "UserModel");
-            RenameTable(name: "dbo.IssueModels", newName: "IssueModel");
         }
     }
 }

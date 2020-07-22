@@ -17,7 +17,7 @@ namespace IssueTracker.Models
         [Required(ErrorMessage = "User Name required.")]
         [Display(Name = "User Name")]
         [StringLength(50, ErrorMessage = "The {0} cannot exceed {1} characters. ", MinimumLength = 1)]
-        public string UserName { get; set; }
+        public string MainName { get; set; }
         public virtual ICollection<ProjectModel> Projects { get; set; }
 
         public virtual ICollection<ProjectModel> MasterPermProjects { get; set; }

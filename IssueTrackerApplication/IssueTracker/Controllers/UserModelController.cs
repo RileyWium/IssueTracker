@@ -23,7 +23,7 @@ namespace IssueTracker.Controllers
             var viewModel = new UserIndexData();
             viewModel.Users = db.Users
                 .Include(u => u.Projects)
-                .OrderBy(u => u.UserName);
+                .OrderBy(u => u.MainName);
 
             if(id != null)
             {

@@ -7,13 +7,13 @@ namespace IssueTracker.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class twocontextreset : IMigrationMetadata
+    public sealed partial class update_user_fields : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(twocontextreset));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(update_user_fields));
         
         string IMigrationMetadata.Id
         {
-            get { return "202007152249503_twocontextreset"; }
+            get { return "202007160005388_update_user_fields"; }
         }
         
         string IMigrationMetadata.Source

@@ -10,10 +10,6 @@ namespace IssueTracker.DAL
 {
     public class WitContext : DbContext
     {
-        public WitContext()
-            : base("WitContextConnnect")
-        {
-        }
 
         public DbSet<IssueModel> Issues { get; set; }
         public DbSet<ProjectModel> Projects { get; set; }

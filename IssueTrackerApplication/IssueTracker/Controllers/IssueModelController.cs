@@ -13,6 +13,7 @@ using System.Data.Entity.Infrastructure;
 
 namespace IssueTracker.Controllers
 {
+    [Authorize]
     public class IssueModelController : Controller
     {
         private WitContext db = new WitContext();

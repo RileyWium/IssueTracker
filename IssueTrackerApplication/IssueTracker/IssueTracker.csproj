@@ -184,6 +184,7 @@
     <Compile Include="Controllers\ProjectModelController.cs" />
     <Compile Include="Controllers\RolesAdminController.cs" />
     <Compile Include="Controllers\UserModelController.cs" />
+    <Compile Include="Controllers\UsersAdminController.cs" />
     <Compile Include="DAL\IssueConfiguration.cs" />
     <Compile Include="DAL\IssueInterceptorLogging.cs" />
     <Compile Include="DAL\IssueInterceptorTransientErrors.cs" />
@@ -194,17 +195,25 @@
     </Compile>
     <Compile Include="Logging\ILogger.cs" />
     <Compile Include="Logging\Logger.cs" />
-    <Compile Include="Migrations\202007152200475_InitialDatabase.cs" />
-    <Compile Include="Migrations\202007152200475_InitialDatabase.designer.cs">
-      <DependentUpon>202007152200475_InitialDatabase.cs</DependentUpon>
+    <Compile Include="Migrations\202007152356223_InitialCreate.cs" />
+    <Compile Include="Migrations\202007152356223_InitialCreate.designer.cs">
+      <DependentUpon>202007152356223_InitialCreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202007152249503_twocontextreset.cs" />
-    <Compile Include="Migrations\202007152249503_twocontextreset.designer.cs">
-      <DependentUpon>202007152249503_twocontextreset.cs</DependentUpon>
+    <Compile Include="Migrations\202007160001390_twocontextreset.cs" />
+    <Compile Include="Migrations\202007160001390_twocontextreset.designer.cs">
+      <DependentUpon>202007160001390_twocontextreset.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202007152254544_update_user_fields.cs" />
-    <Compile Include="Migrations\202007152254544_update_user_fields.designer.cs">
-      <DependentUpon>202007152254544_update_user_fields.cs</DependentUpon>
+    <Compile Include="Migrations\202007160005388_update_user_fields.cs" />
+    <Compile Include="Migrations\202007160005388_update_user_fields.designer.cs">
+      <DependentUpon>202007160005388_update_user_fields.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202007162352148_Added_MainName.cs" />
+    <Compile Include="Migrations\202007162352148_Added_MainName.designer.cs">
+      <DependentUpon>202007162352148_Added_MainName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202007162353479_Added_MainName_Identity.cs" />
+    <Compile Include="Migrations\202007162353479_Added_MainName_Identity.designer.cs">
+      <DependentUpon>202007162353479_Added_MainName_Identity.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\WitConfiguration.cs" />
@@ -216,7 +225,7 @@
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\AssignedProjectData.cs" />
-    <Compile Include="ViewModels\RoleViewModel.cs" />
+    <Compile Include="ViewModels\AdminViewModel.cs" />
     <Compile Include="ViewModels\UserIndexData.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -389,14 +398,12 @@
     <Content Include="Views\Account\ForgotPassword.cshtml" />
     <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\SendCode.cshtml" />
     <Content Include="Views\Account\VerifyCode.cshtml" />
     <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
     <Content Include="Views\Manage\ChangePassword.cshtml" />
-    <Content Include="Views\Manage\Index.cshtml" />
     <Content Include="Views\Manage\ManageLogins.cshtml" />
     <Content Include="Views\Manage\SetPassword.cshtml" />
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
@@ -411,6 +418,16 @@
     <Content Include="Views\UserModel\Details.cshtml" />
     <Content Include="Views\UserModel\Edit.cshtml" />
     <Content Include="Views\UserModel\Index.cshtml" />
+    <Content Include="Views\UsersAdmin\Index.cshtml" />
+    <Content Include="Views\UsersAdmin\Details.cshtml" />
+    <Content Include="Views\UsersAdmin\Create.cshtml" />
+    <Content Include="Views\UsersAdmin\Edit.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Shared\_CreateRegisterUserPartial.cshtml" />
+    <Content Include="Views\Manage\Index.cshtml" />
+    <Content Include="Views\Shared\_UserDetailsPartial.cshtml" />
+    <Content Include="Views\Manage\Edit.cshtml" />
+    <Content Include="Views\Shared\_EditUserPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -425,14 +442,20 @@
     <TypeScriptCompile Include="Scripts\index.d.ts" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202007152200475_InitialDatabase.resx">
-      <DependentUpon>202007152200475_InitialDatabase.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202007152356223_InitialCreate.resx">
+      <DependentUpon>202007152356223_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202007152249503_twocontextreset.resx">
-      <DependentUpon>202007152249503_twocontextreset.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202007160001390_twocontextreset.resx">
+      <DependentUpon>202007160001390_twocontextreset.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202007152254544_update_user_fields.resx">
-      <DependentUpon>202007152254544_update_user_fields.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202007160005388_update_user_fields.resx">
+      <DependentUpon>202007160005388_update_user_fields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202007162352148_Added_MainName.resx">
+      <DependentUpon>202007162352148_Added_MainName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202007162353479_Added_MainName_Identity.resx">
+      <DependentUpon>202007162353479_Added_MainName_Identity.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

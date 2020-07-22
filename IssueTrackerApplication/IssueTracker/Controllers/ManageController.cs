@@ -7,6 +7,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using IssueTracker.Models;
+using IssueTracker.ViewModels;
 
 namespace IssueTracker.Controllers
 {
@@ -52,27 +53,40 @@ namespace IssueTracker.Controllers
 
         //
         // GET: /Manage/Index
-        public async Task<ActionResult> Index(ManageMessageId? message)
+        public async Task<ActionResult> Index()
         {
-            ViewBag.StatusMessage =
-                message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
-                : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
-                : message == ManageMessageId.SetTwoFactorSuccess ? "Your two-factor authentication provider has been set."
-                : message == ManageMessageId.Error ? "An error has occurred."
-                : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
-                : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
-                : "";
-
             var userId = User.Identity.GetUserId();
-            var model = new IndexViewModel
+            var user = await UserManager.FindByIdAsync(userId);
+            return View(user);
+        }
+
+        //GET: /Manage/Edit
+        public async Task<ActionResult> Edit()
+        {
+            var userId = User.Identity.GetUserId();
+            var user = await UserManager.FindByIdAsync(userId);
+            var model = new EditUserViewModel
             {
-                HasPassword = HasPassword(),
-                PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
-                TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
-                Logins = await UserManager.GetLoginsAsync(userId),
-                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
+                Email = user.Email,
+                MainName = user.MainName
             };
             return View(model);
+        }
+
+        //POST: Manage/Edit/
+        //To protect from overposting attacks just enable the specific properties you want to bind to
+        [HttpPost, ActionName("Edit")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> EditPost()
+        {
+            var userId = User.Identity.GetUserId();
+            var userToUpdate = await UserManager.FindByIdAsync(userId);
+            if(TryUpdateModel (userToUpdate,"",new string[] {"MainName"}))
+            {
+                await UserManager.UpdateAsync(userToUpdate);
+                return RedirectToAction("Index");
+            }
+            return View();
         }
 
         //

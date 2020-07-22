@@ -7,13 +7,13 @@ namespace IssueTracker.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class InitialDatabase : IMigrationMetadata
+    public sealed partial class Added_MainName_Identity : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(InitialDatabase));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Added_MainName_Identity));
         
         string IMigrationMetadata.Id
         {
-            get { return "202007152200475_InitialDatabase"; }
+            get { return "202007162353479_Added_MainName_Identity"; }
         }
         
         string IMigrationMetadata.Source

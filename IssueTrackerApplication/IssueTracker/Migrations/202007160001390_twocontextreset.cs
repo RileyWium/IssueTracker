@@ -1,9 +1,9 @@
-﻿namespace IssueTracker.Migrations
+﻿namespace IssueTracker.Migrations.WitConfiguration
 {
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class InitialDatabase : DbMigration
+    public partial class twocontextreset : DbMigration
     {
         public override void Up()
         {
