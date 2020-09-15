@@ -1,17 +1,12 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace IssueTracker.Models
 {
-
     public enum Status
     {
-        Open, Closed
+        Open, In_Progress, Under_Review, Final_Approval, Closed
     }
     public enum Priority
     {
@@ -32,16 +27,19 @@ namespace IssueTracker.Models
         [Display(Name = "Report Date")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime ReportDate { get; set; }
+        public DateTime ReportDate { get; set; }        
+        [Display(Name = "Due Date")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime? DueDate { get; set; }
         [Display(Name = "Issue Description")]
         [StringLength(350, ErrorMessage = "The {0} cannot exceed {1} characters. ")]
         public string IssDescription { get; set; }
         [Display(Name = "Assignee")]
-        public UserModel IssAssignee { get; set; }
+        public string IssAssigneeName { get; set; }
         [Required]
-        [Display(Name = "Reporter")]
-        public UserModel IssReporter { get; set; }
-        //question mark after Status(?) means its nullable
+        [Display(Name = "Reporter")]        
+        public string IssReporterName { get; set; }
         [Required]
         [Display(Name = "Status")]
         public Status IssStatus { get; set; }

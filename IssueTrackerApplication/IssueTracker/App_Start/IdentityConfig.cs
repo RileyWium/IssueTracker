@@ -112,7 +112,6 @@ namespace IssueTracker
         public ApplicationRoleManager(IRoleStore<IdentityRole, string> roleStore)
             : base(roleStore)
         {
-
         }
 
         public static ApplicationRoleManager Create(IdentityFactoryOptions<ApplicationRoleManager>
@@ -134,7 +133,7 @@ namespace IssueTracker
         public static void InitializeIdentityForEF(ApplicationDbContext db)
         {
             var userManager =
-                HttpContext.Current.GetOwinContext().GetUserManager < ApplicationUserManager>();
+                HttpContext.Current.GetOwinContext().GetUserManager <ApplicationUserManager>();
             var roleManager = HttpContext.Current.GetOwinContext().Get<ApplicationRoleManager>();
             const string name = "admin@example.com";
             const string password = "Adm1n@example.com";
@@ -154,7 +153,7 @@ namespace IssueTracker
                 {
                     UserName = name,
                     Email = name,
-                    MainName = "Admin"
+                    MainName = "Admin1"
                 };
                 var result = userManager.Create(user, password);
                 result = userManager.SetLockoutEnabled(user.Id, false);

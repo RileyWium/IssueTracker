@@ -1,33 +1,49 @@
-﻿@model IEnumerable<IssueTracker.Models.ProjectModel>
+﻿@model IssueTracker.ViewModels.IdenProjJoinViewModel
 
 @{
     ViewBag.Title = "Projects";
 }
 
-<h2>Projects</h2>
+<h2>@ViewBag.Title</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
+@if (Model != null)
+{
+<table class="table table-responsive-lg">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.ProjName)
-        </th>
+        <th>Project Name</th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.ProjName)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ProjectID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ProjectID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ProjectID })
-        </td>
-    </tr>
-}
-
+    @foreach (var item in Model.MasterProjects)
+    {
+        <tr class="table">
+            <td>
+                @Html.DisplayFor(modelItem => item.ProjName)
+            </td>
+            <td>
+                @Html.ActionLink("Select", "Index", "IssueModel", new { projID = item.ProjectID }, new { }) |
+                @Html.ActionLink("Edit", "Edit", new { id = item.ProjectID }) |
+                @Html.ActionLink("Invite", "Invite", new { id = item.ProjectID }) |
+                @Html.ActionLink("Leave", "Leave", new { id = item.ProjectID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ProjectID })
+            </td>
+        </tr>
+    }
+    @foreach (var item in Model.Projects)
+    {
+        <tr class="table">
+            <td>
+                @Html.DisplayFor(modelItem => item.ProjName)
+            </td>
+            <td>
+                @Html.ActionLink("Select", "Index", "IssueModel", new { projID = item.ProjectID }, new { }) |
+                @Html.ActionLink("Invite", "Invite", new { id = item.ProjectID }) |
+                @Html.ActionLink("Leave", "Leave", new { id = item.ProjectID })
+            </td>
+        </tr>
+    }
 </table>
+}

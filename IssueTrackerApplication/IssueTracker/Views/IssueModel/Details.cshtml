@@ -1,13 +1,12 @@
 ﻿@model IssueTracker.Models.IssueModel
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Issue Details";
 }
 
-<h2>Details</h2>
+<h2>@ViewBag.Title</h2>
 
 <div>
-    <h4>IssueModel</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -35,11 +34,35 @@
         </dd>
 
         <dt>
+            @Html.DisplayNameFor(model => model.DueDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DueDate)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.IssDescription)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.IssDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IssAssigneeName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IssAssigneeName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IssReporterName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IssReporterName)
         </dd>
 
         <dt>
@@ -61,6 +84,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID, projID = ViewBag.ProjectID}) |
+    @Html.ActionLink("Back to Issues", "Index", new { projID = ViewBag.ProjectID})
 </p>

@@ -2,32 +2,48 @@
 @using PagedList.Mvc;
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
-
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Project Issues";
 }
 
-<h2>Project Issues</h2>
-
+<h2>@ViewBag.Title</h2>
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create", new { projID = ViewBag.ProjID })
 </p>
 @using (Html.BeginForm("Index", "IssueModel", FormMethod.Get))
 {
     <p>
-        Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
-        <input type="submit" value="Search" class=" btn btn-group-sm btn-primary" />
+        Find by name: @Html.TextBox("searchString", ViewBag.CurrentFilter as string)
+        @Html.Hidden("projID", (int) ViewBag.ProjID)
+        <input type="submit" value="Search" class="btn btn-group-sm btn-primary" />
     </p>
 }
-<table class="table">
+<table class="table table-responsive-lg">
     <tr>
-        <th></th>
         <th>
-            @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter=ViewBag.CurrentFilter })
+            @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter, projID = ViewBag.ProjID })
 
         </th>
         <th>
-            @Html.ActionLink("Report Date", "Index", new { sortOrder = ViewBag.DateSortParm , currentFilter=ViewBag.CurrentFilter})
+            @Html.ActionLink("Report Date", "Index", new { sortOrder = ViewBag.DateSortParm, currentFilter = ViewBag.CurrentFilter, projID = ViewBag.ProjID })
+        </th>
+        <th>
+            Due Date
+        </th>
+        <th>
+            Description
+        </th>
+        <th>
+            Assignee
+        </th>
+        <th>
+            Reporter
+        </th>
+        <th>
+            Status
+        </th>
+        <th>
+            Priority
         </th>
     </tr>
 
@@ -35,16 +51,22 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Project.ProjName)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.IssName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ReportDate)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.DueDate)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.IssDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IssAssigneeName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IssReporterName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.IssStatus)
@@ -53,15 +75,17 @@
                 @Html.DisplayFor(modelItem => item.IssPriority)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                @Html.ActionLink("Edit", "Edit", new { id = item.ID, projID = ViewBag.ProjID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ID, projID = ViewBag.ProjID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID, projID = ViewBag.ProjID })
             </td>
         </tr>
     }
-
 </table>
 <br />
 Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 @Html.PagedListPager(Model, page => Url.Action("Index",
-    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+    new { sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter, searchString = "", page, projID = ViewBag.ProjID }))
+<div>
+    @Html.ActionLink("Back to Projects", "Index", "ProjectModel")
+</div>

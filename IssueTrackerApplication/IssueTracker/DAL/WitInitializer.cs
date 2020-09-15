@@ -11,7 +11,7 @@ namespace IssueTracker.DAL
     {
         protected override void Seed(WitContext context)
         {
-            /*
+            /*OUTDATED
             var users = new List<UserModel>
             {
             new UserModel{UserName="Riley"},

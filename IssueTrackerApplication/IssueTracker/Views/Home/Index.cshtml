@@ -1,7 +1,7 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
-
+<!--
 <div class="navbar navbar-fixed-top">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -13,7 +13,7 @@
         </div>
         <div>
             <ul class="nav navbar">
-                <li><button onclick="location.href='@Url.Action("Index", "Home")'"  class="btn btn-primary">
+                <li><button onclick="location.href='ATUrl.Action("Index", "Home")'"  class="btn btn-primary">
                     <i class="fa fa-plus" aria-hidden="true"></i> New Project</button></li>
                 <li><button class="btn btn-secondary">
                     <i class="fa fa-refresh" aria-hidden="false"></i> Refresh</button></li>
@@ -21,27 +21,26 @@
         </div>
     </div>
 </div>
-
+-->
 
 
 <div class="row">
     <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
+        <h2>About WIT</h2>
+        <p>The Wium Issue Tracker is used to coordinate projects between groups of people right from the browser.
+           It allows for users to setup projects, invite each other, and create issue objects to track the
+           progress of projects. Registering and logging in is required to ensure authentication.
         </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
     </div>
     <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+        <h2>Tools Used In Development</h2>
+        <p>Was made in ASP.NET MVC with Code First Approach and Entity Framework. The database runs on
+           Microsoft SQL Server Express. The front end uses Html and CSS, along with libraries like bootstrap and font awesome.
+        </p>
     </div>
     <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+        <h2>Software Requirement Specifications</h2>
+        <p>The SRS can be found here:</p>
+        <p><a class="btn btn-default" href="~/Content/TextFiles/WIT_SRS.pdf" download>Download &raquo;</a></p>
     </div>
 </div>

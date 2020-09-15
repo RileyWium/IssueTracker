@@ -183,7 +183,6 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProjectModelController.cs" />
     <Compile Include="Controllers\RolesAdminController.cs" />
-    <Compile Include="Controllers\UserModelController.cs" />
     <Compile Include="Controllers\UsersAdminController.cs" />
     <Compile Include="DAL\IssueConfiguration.cs" />
     <Compile Include="DAL\IssueInterceptorLogging.cs" />
@@ -195,38 +194,29 @@
     </Compile>
     <Compile Include="Logging\ILogger.cs" />
     <Compile Include="Logging\Logger.cs" />
-    <Compile Include="Migrations\202007152356223_InitialCreate.cs" />
-    <Compile Include="Migrations\202007152356223_InitialCreate.designer.cs">
-      <DependentUpon>202007152356223_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\202009152134460_twoContextReset.cs" />
+    <Compile Include="Migrations\202009152134460_twoContextReset.designer.cs">
+      <DependentUpon>202009152134460_twoContextReset.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202007160001390_twocontextreset.cs" />
-    <Compile Include="Migrations\202007160001390_twocontextreset.designer.cs">
-      <DependentUpon>202007160001390_twocontextreset.cs</DependentUpon>
+    <Compile Include="Migrations\202009152141540_updateUserFields.cs" />
+    <Compile Include="Migrations\202009152141540_updateUserFields.designer.cs">
+      <DependentUpon>202009152141540_updateUserFields.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202007160005388_update_user_fields.cs" />
-    <Compile Include="Migrations\202007160005388_update_user_fields.designer.cs">
-      <DependentUpon>202007160005388_update_user_fields.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202007162352148_Added_MainName.cs" />
-    <Compile Include="Migrations\202007162352148_Added_MainName.designer.cs">
-      <DependentUpon>202007162352148_Added_MainName.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202007162353479_Added_MainName_Identity.cs" />
-    <Compile Include="Migrations\202007162353479_Added_MainName_Identity.designer.cs">
-      <DependentUpon>202007162353479_Added_MainName_Identity.cs</DependentUpon>
+    <Compile Include="Migrations\202009152249159_nullableDueDate.cs" />
+    <Compile Include="Migrations\202009152249159_nullableDueDate.designer.cs">
+      <DependentUpon>202009152249159_nullableDueDate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\WitConfiguration.cs" />
     <Compile Include="Models\AccountViewModel.cs" />
+    <Compile Include="Models\IdenProjModel.cs" />
     <Compile Include="Models\IdentityModel.cs" />
     <Compile Include="Models\IssueModel.cs" />
     <Compile Include="Models\ManageViewModel.cs" />
     <Compile Include="Models\ProjectModel.cs" />
-    <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModels\AssignedProjectData.cs" />
     <Compile Include="ViewModels\AdminViewModel.cs" />
-    <Compile Include="ViewModels\UserIndexData.cs" />
+    <Compile Include="ViewModels\MinorViewModels.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -356,6 +346,7 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
+    <Content Include="Scripts\WIT\CopyBtn.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -376,9 +367,7 @@
     <Content Include="Views\IssueModel\Index.cshtml" />
     <Content Include="Views\ProjectModel\Create.cshtml" />
     <Content Include="Views\ProjectModel\Delete.cshtml" />
-    <Content Include="Views\ProjectModel\Details.cshtml" />
     <Content Include="Views\ProjectModel\Edit.cshtml" />
-    <Content Include="Views\ProjectModel\Index.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />
     <Content Include="Scripts\umd\popper.js.map" />
     <Content Include="Scripts\umd\popper.js.flow" />
@@ -413,11 +402,6 @@
     <Content Include="Views\RolesAdmin\Edit.cshtml" />
     <Content Include="Views\RolesAdmin\Delete.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
-    <Content Include="Views\UserModel\Create.cshtml" />
-    <Content Include="Views\UserModel\Delete.cshtml" />
-    <Content Include="Views\UserModel\Details.cshtml" />
-    <Content Include="Views\UserModel\Edit.cshtml" />
-    <Content Include="Views\UserModel\Index.cshtml" />
     <Content Include="Views\UsersAdmin\Index.cshtml" />
     <Content Include="Views\UsersAdmin\Details.cshtml" />
     <Content Include="Views\UsersAdmin\Create.cshtml" />
@@ -428,6 +412,10 @@
     <Content Include="Views\Shared\_UserDetailsPartial.cshtml" />
     <Content Include="Views\Manage\Edit.cshtml" />
     <Content Include="Views\Shared\_EditUserPartial.cshtml" />
+    <Content Include="Views\ProjectModel\Index.cshtml" />
+    <Content Include="Views\ProjectModel\Invite.cshtml" />
+    <Content Include="Views\ProjectModel\Join.cshtml" />
+    <Content Include="Views\ProjectModel\Leave.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -442,20 +430,14 @@
     <TypeScriptCompile Include="Scripts\index.d.ts" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202007152356223_InitialCreate.resx">
-      <DependentUpon>202007152356223_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202009152134460_twoContextReset.resx">
+      <DependentUpon>202009152134460_twoContextReset.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202007160001390_twocontextreset.resx">
-      <DependentUpon>202007160001390_twocontextreset.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202009152141540_updateUserFields.resx">
+      <DependentUpon>202009152141540_updateUserFields.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202007160005388_update_user_fields.resx">
-      <DependentUpon>202007160005388_update_user_fields.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202007162352148_Added_MainName.resx">
-      <DependentUpon>202007162352148_Added_MainName.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202007162353479_Added_MainName_Identity.resx">
-      <DependentUpon>202007162353479_Added_MainName_Identity.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202009152249159_nullableDueDate.resx">
+      <DependentUpon>202009152249159_nullableDueDate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

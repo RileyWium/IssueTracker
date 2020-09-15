@@ -110,8 +110,6 @@ D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\bin\Microsoft.Owin.S
 D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\bin\Microsoft.Owin.Security.OAuth.xml
 D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\bin\Microsoft.Owin.Security.Twitter.xml
 D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\obj\Debug\IssueTracker.csproj.GenerateResource.cache
-D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\obj\Debug\IssueTracker.Migrations.WitConfiguration.twocontextreset.resources
-D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\obj\Debug\IssueTracker.Migrations.InitialCreate.resources
-D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\obj\Debug\IssueTracker.Migrations.update_user_fields.resources
-D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\obj\Debug\IssueTracker.Migrations.WitConfiguration.Added_MainName.resources
-D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\obj\Debug\IssueTracker.Migrations.Added_MainName_Identity.resources
+D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\obj\Debug\IssueTracker.Migrations.WitConfiguration.twoContextReset.resources
+D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\obj\Debug\IssueTracker.Migrations.updateUserFields.resources
+D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\obj\Debug\IssueTracker.Migrations.WitConfiguration.nullableDueDate.resources

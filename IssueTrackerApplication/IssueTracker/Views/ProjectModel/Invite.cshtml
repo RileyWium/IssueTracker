@@ -1,0 +1,31 @@
+﻿@model IssueTracker.ViewModels.IssueCreationViewModel
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+@{
+    ViewBag.Title = "Invite Users to Project";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<hr />
+<div class="col-md-10">
+    <p>
+        Invite to project: @ViewBag.ProjName.
+    </p>
+    <p>
+        Following this URL address will allow users to join the project. Signing in is required.
+    </p>
+</div>
+
+<div class="col-md-10">
+    @Html.TextBox("InviteConfirmURL", (string) ViewBag.JoinUrl, new { style = "width:40vw ; max-width:2500px" ,id="JoinUrl"})
+    <button class="btn btn-dark" onclick="copyToClipboard('JoinUrl')">COPY</button>
+</div>
+
+<div>
+    @Html.ActionLink("Back to Projects", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/Scripts/WIT/CopyBtn.js")
+}

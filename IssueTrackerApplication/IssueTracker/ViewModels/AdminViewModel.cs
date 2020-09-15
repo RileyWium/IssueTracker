@@ -25,7 +25,7 @@ namespace IssueTracker.ViewModels
         public string Email { get; set; }
 
         [Required]
-        [Display(Name = "First Name")]
+        [Display(Name = "Main Name")]
         [StringLength(50)]
         public string MainName { get; set; }
 
