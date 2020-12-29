@@ -1,49 +1,97 @@
-﻿@model IssueTracker.ViewModels.IdenProjJoinViewModel
-
+﻿@model PagedList.IPagedList<IssueTracker.Models.ProjectModel>
+@using PagedList.Mvc;
 @{
     ViewBag.Title = "Projects";
 }
 
-<h2>@ViewBag.Title</h2>
+<div class="d-sm-flex align-items-center justify-content-between">
+    <h2 class="mb-0 text-gray-800">@ViewBag.Title</h2>
+    <div class="row">
+        @using (Html.BeginForm("Index", "ProjectModel", FormMethod.Post))
+        {
+            <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search ">
+                <div class="input-group ">
+                    @Html.TextBox("searchString", ViewBag.CurrentFilter as string, new { @class = "form-control bg-gradient-light border-0", @placeholder = "Search for project" })
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="submit"  >
+                            <i class="fas fa-search fa-sm"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        }
+        <a href="@Url.Action("Create", "ProjectModel", new { })" class="btn btn-primary" style="margin-left:4px">
+            <i class="fas fa-plus fa-sm fa-fw mr-2"></i>
+            Create
+        </a>
+    </div>
+</div>
+<hr />
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 @if (Model != null)
 {
-<table class="table table-responsive-lg">
-    <tr>
-        <th>Project Name</th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model.MasterProjects)
-    {
-        <tr class="table">
-            <td>
-                @Html.DisplayFor(modelItem => item.ProjName)
-            </td>
-            <td>
-                @Html.ActionLink("Select", "Index", "IssueModel", new { projID = item.ProjectID }, new { }) |
-                @Html.ActionLink("Edit", "Edit", new { id = item.ProjectID }) |
-                @Html.ActionLink("Invite", "Invite", new { id = item.ProjectID }) |
-                @Html.ActionLink("Leave", "Leave", new { id = item.ProjectID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.ProjectID })
-            </td>
-        </tr>
-    }
-    @foreach (var item in Model.Projects)
-    {
-        <tr class="table">
-            <td>
-                @Html.DisplayFor(modelItem => item.ProjName)
-            </td>
-            <td>
-                @Html.ActionLink("Select", "Index", "IssueModel", new { projID = item.ProjectID }, new { }) |
-                @Html.ActionLink("Invite", "Invite", new { id = item.ProjectID }) |
-                @Html.ActionLink("Leave", "Leave", new { id = item.ProjectID })
-            </td>
-        </tr>
-    }
-</table>
+    var cardButton = "btn text-gray-900 font-weight-bold ";
+    <div class="row">
+        @{ int i = 0;}
+        @foreach (var item in Model)
+        {
+            if (i < (ViewBag.masterCnt - (ViewBag.pageSize * (ViewBag.pageNum - 1))))
+            {
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-primary shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-lg font-weight-bold text-primary mb-1">@item.ProjName</div>
+                                    @Html.ActionLink("Select", "Index", "IssueModel", new { projID = item.ProjectID }, new { @class = cardButton + "btn-success" })
+                                    @Html.ActionLink("Invite", "Invite", new { id = item.ProjectID }, new { @class = cardButton + "btn-info" })
+                                    @Html.ActionLink("Leave", "Leave", new { id = item.ProjectID }, new { @class = cardButton + "btn-primary" })
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.ProjectID }, new { @class = cardButton + "btn-warning" })
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.ProjectID }, new { @class = cardButton + "btn-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-primary shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-lg font-weight-bold text-primary mb-1">@item.ProjName</div>
+                                    @Html.ActionLink("Select", "Index", "IssueModel", new { projID = item.ProjectID }, new { @class = cardButton + "btn-success" })
+                                    @Html.ActionLink("Invite", "Invite", new { id = item.ProjectID }, new { @class = cardButton + "btn-info" })
+                                    @Html.ActionLink("Leave", "Leave", new { id = item.ProjectID }, new { @class = cardButton + "btn-primary" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            i++;
+        }
+    </div>
+    <div>
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+        @Html.PagedListPager(Model, page => Url.Action("Index",
+            new
+            {
+                sortOrder = ViewBag.CurrentSort,
+                currentFilter = ViewBag.CurrentFilter,
+                searchString = "",
+                page,
+                projID = ViewBag.ProjID
+            }),
+            new PagedListRenderOptions()
+            {
+                //ContainerDivClasses = new[] { "dataTables_paginate paging_simple_numbers" },
+                UlElementClasses = new[] { "pagination" },
+                LiElementClasses = new[] { " page-item ", "paginate_button" },                
+                FunctionToTransformEachPageLink = (liTag, aTag) => { aTag.AddCssClass("page-link"); liTag.InnerHtml = aTag.ToString(); return liTag; }                
+            })
+    </div>
 }
+

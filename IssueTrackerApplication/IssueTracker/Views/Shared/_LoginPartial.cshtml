@@ -1,22 +1,46 @@
 ﻿@using Microsoft.AspNet.Identity
 @if (Request.IsAuthenticated)
 {
-    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
-    {
-        @Html.AntiForgeryToken()
 
-        <ul class="nav navbar">
-            <li>
-                @Html.ActionLink("Manage " + User.Identity.GetUserName(), "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-            </li>
-            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-        </ul>
-    }
+    @Html.AntiForgeryToken()
+    <li class="nav-item dropdown no-arrow">
+        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="mr-2 d-none d-lg-inline text-gray-600 small">@User.Identity.GetUserName() </span>
+            <i class="fas fa-user fa-lg fa-fw mr-2 text-gray-400"></i>
+        </a>
+
+        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+            <a href="@Url.Action("Index", "Manage", new { })" title="Manage" class="dropdown-item">
+                <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                Settings
+            </a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                Logout
+            </a>
+        </div>
+    </li>
 }
 else
 {
-    <ul class="nav navbar">
-        <li>@Html.ActionLink("Register", "Register", "Account", new { returnUrl = HttpContext.Current.Request.Url.AbsolutePath }, htmlAttributes: new { id = "registerLink" })</li>
-        <li>@Html.ActionLink("Log in", "Login", "Account", new { returnUrl = HttpContext.Current.Request.Url.AbsolutePath }, htmlAttributes: new { id = "loginLink" })</li>
-    </ul>
+    <li class="nav-item dropdown no-arrow">
+        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="mr-2 d-none d-lg-inline text-gray-600 small">Sign In</span>
+            <i class="fas fa-user fa-lg fa-fw mr-2 text-gray-400"></i>
+        </a>
+
+        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+            <a href="@Url.Action("Register", "Account", new { })" title="Register" class="dropdown-item">
+                <i class="fas fa-signing fa-sm fa-fw mr-2 text-gray-400"></i>
+                Register
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href="@Url.Action("Login", "Account", new { })" title="Login" class="dropdown-item">
+                <i class="fas fa-sign-in-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                Login
+            </a>
+        </div>
+    </li>
 }
+

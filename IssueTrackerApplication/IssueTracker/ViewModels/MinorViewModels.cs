@@ -8,13 +8,6 @@ using IssueTracker.Models;
 
 namespace IssueTracker.ViewModels
 {
-    public class IdenProjJoinViewModel
-    {
-        public IEnumerable<ProjectModel> Projects { get; set; }
-        public IEnumerable<ProjectModel> MasterProjects { get; set; }
-
-    }
-
     public class IssueCreationViewModel
     {
         public IssueModel Issue { get; set; }

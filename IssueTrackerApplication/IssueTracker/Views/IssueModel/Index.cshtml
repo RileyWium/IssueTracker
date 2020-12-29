@@ -1,91 +1,166 @@
 ﻿@model PagedList.IPagedList<IssueTracker.Models.IssueModel>
 @using PagedList.Mvc;
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+@*Enable datatables.net*@
+<link href="~/Content/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
 @{
     ViewBag.Title = "Project Issues";
 }
-
-<h2>@ViewBag.Title</h2>
-<p>
-    @Html.ActionLink("Create New", "Create", new { projID = ViewBag.ProjID })
-</p>
-@using (Html.BeginForm("Index", "IssueModel", FormMethod.Get))
-{
-    <p>
-        Find by name: @Html.TextBox("searchString", ViewBag.CurrentFilter as string)
-        @Html.Hidden("projID", (int) ViewBag.ProjID)
-        <input type="submit" value="Search" class="btn btn-group-sm btn-primary" />
-    </p>
-}
-<table class="table table-responsive-lg">
-    <tr>
-        <th>
-            @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter, projID = ViewBag.ProjID })
-
-        </th>
-        <th>
-            @Html.ActionLink("Report Date", "Index", new { sortOrder = ViewBag.DateSortParm, currentFilter = ViewBag.CurrentFilter, projID = ViewBag.ProjID })
-        </th>
-        <th>
-            Due Date
-        </th>
-        <th>
-            Description
-        </th>
-        <th>
-            Assignee
-        </th>
-        <th>
-            Reporter
-        </th>
-        <th>
-            Status
-        </th>
-        <th>
-            Priority
-        </th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.IssName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ReportDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DueDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IssDescription)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IssAssigneeName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IssReporterName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IssStatus)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IssPriority)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.ID, projID = ViewBag.ProjID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.ID, projID = ViewBag.ProjID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.ID, projID = ViewBag.ProjID })
-            </td>
-        </tr>
-    }
-</table>
-<br />
-Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-@Html.PagedListPager(Model, page => Url.Action("Index",
-    new { sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter, searchString = "", page, projID = ViewBag.ProjID }))
-<div>
-    @Html.ActionLink("Back to Projects", "Index", "ProjectModel")
+<div class="d-sm-flex align-items-center justify-content-between">
+    <h2 class="mb-0 text-gray-800">@ViewBag.Title</h2>
+    <div class="row">
+        <a href="@Url.Action("Create", "IssueModel", new { projID = ViewBag.ProjID })" class="btn btn-primary" style="margin-left:4px">
+            <i class="fas fa-plus fa-sm fa-fw mr-2"></i>
+            Create
+        </a>
+    </div>
 </div>
+<hr />
+@*variable declarations for Detail card. For some reason simultanious declaration causes problems*@
+@{ string dName, dReportDate, dDueDate, dDescription, dAssignee, dReporter, dStatus, dPriority;
+    dName = ""; dReportDate = ""; dDueDate = ""; dDescription = ""; dAssignee = ""; dReporter = ""; dStatus = ""; dPriority = "";}
+<div class="row">
+    <div class="col-lg-6">
+        <div class="card shadow">
+            <div class="d-md-flex justify-content-between card-header">
+                <h5 class="m-0 font-weight-bold text-primary">Issues</h5>
+                <div class="row">
+                    @using (Html.BeginForm("Index", "IssueModel", new { currentFilter = ViewBag.CurrentFilter, projID = ViewBag.ProjID, issID = ViewBag.IssueID, page = ViewBag.CurrentPage }, FormMethod.Post))
+                    {
+                        <form>
+                            <div class="input-group ">
+                                @Html.TextBox("searchString", ViewBag.CurrentFilter as string, new { @class = "form-control bg-gradient-light border-0", @placeholder = "Search Issues" })
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="submit">
+                                        <i class="fas fa-search fa-sm"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    }
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered display" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Report Date</th>
+                                <th>Due Date</th>
+                                <th>Assignee</th>
+                                <th>Status</th>
+                                <th>Priority</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>Name</th>
+                                <th>Report Date</th>
+                                <th>Due Date</th>
+                                <th>Assignee</th>
+                                <th>Status</th>
+                                <th>Priority</th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                
+                                <div dclass="paginate_button page-item">
+                                    @{string cssClass = "";}
+                                    @if (item.ID == ViewBag.IssueID)
+                                    {
+                                        cssClass = "bg-gradient-primary text-gray-100";
+                                        dName = item.IssName;
+                                        dReportDate = item.ReportDate.ToString();
+                                        dDueDate = item.DueDate.ToString();
+                                        dDescription = item.IssDescription;
+                                        dAssignee = item.IssAssigneeName;
+                                        dReporter = item.IssReporterName;
+                                        dStatus = item.IssStatus.ToString();
+                                        dPriority = item.IssPriority.ToString();
+                                    }
+                                    <tr class="@cssClass" 
+                                        onclick="location.href = '@(Url.Action("Index", "IssueModel", new { currentFilter = ViewBag.CurrentFilter, projID = ViewBag.ProjID, issID = item.ID, page = ViewBag.CurrentPage}))'" ;>
+                                        <td>@Html.DisplayFor(modelItem => item.IssName)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.ReportDate)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.DueDate)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.IssAssigneeName)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.IssStatus)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.IssPriority)</td>
+                                    </tr>
+                                </div>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card shadow mb-4">
+            <div class="d-md-flex justify-content-between card-header">
+                <h5 class="m-0 font-weight-bold text-primary mb-2" style="padding-bottom:6px">Details</h5>
+                @if (ViewBag.IssueID != null)
+                {
+                    <div>
+                        @Html.ActionLink("Edit", "Edit", new { id = ViewBag.IssueID, projID = ViewBag.ProjID }, new { @class = "btn btn-secondary" })
+                        @Html.ActionLink("Delete", "Delete", new { id = ViewBag.IssueID, projID = ViewBag.ProjID }, new { @class = "btn btn-secondary" })
+                    </div>
+                }
+            </div>
+            <div class="card-body">
+                <dl class="dl-horizontal">                    
+                    <dd class="row">
+                        <span class="border w-100"><a class="font-weight-bold">Name:</a> @dName</span>
+                    </dd>
+                    <dd class="row">
+                        <span class="border w-50"><a class="font-weight-bold">Report Date:</a> @dReportDate</span>
+                        <span class="border w-50"><a class="font-weight-bold">Due Date:</a> @dDueDate</span> 
+                    </dd>
+                    <dd class="row">
+                        <span class="border w-50"><a class="font-weight-bold">Assignee:</a> @dAssignee</span>
+                        <span class="border w-50"><a class="font-weight-bold">Reporter:</a> @dReporter</span>
+                    </dd>
+                    <dd class="row">
+                        <span class="border w-50"><a class="font-weight-bold">Status:</a> @dStatus</span> 
+                        <span class="border w-50"><a class="font-weight-bold">Priority:</a> @dPriority</span>
+                    </dd>
+                    <dd class="row">
+                        <span class="border w-100"><a class="font-weight-bold">Description:</a> @dDescription</span>
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+    @*Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount*@
+    @Html.PagedListPager(Model, page => Url.Action("Index",
+   new
+   {
+   sortOrder = ViewBag.CurrentSort,
+   currentFilter = ViewBag.CurrentFilter,
+   searchString = "",
+   page,
+   projID = ViewBag.ProjID,
+   issID = ViewBag.IssueID
+   }),
+   new PagedListRenderOptions()
+   {
+   ContainerDivClasses = new[] { "dataTables_paginate paging_simple_numbers" },
+   UlElementClasses = new[] { "pagination" },
+   LiElementClasses = new[] { " page-item ", "paginate_button" },
+   FunctionToTransformEachPageLink = (liTag, aTag) => { aTag.AddCssClass("page-link"); liTag.InnerHtml = aTag.ToString(); return liTag; }
+   })
+   @Html.ActionLink("Back to Projects", "Index", "ProjectModel", new { @class = "btn btn-secondary" })
+</div>   
+
+@section Scripts {
+    @Scripts.Render("~/Content/vendor/datatables/jquery.dataTables.min.js")
+    @Scripts.Render("~/Content/vendor/datatables/dataTables.bootstrap4.min.js")
+    @Scripts.Render("~/Scripts/js/demo/datatables-demo.js")
+}

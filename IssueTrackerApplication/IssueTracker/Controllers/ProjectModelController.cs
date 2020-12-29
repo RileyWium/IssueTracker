@@ -13,6 +13,7 @@ using IssueTracker.ViewModels;
 using Microsoft.AspNet.Identity.Owin;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
+using PagedList;
 
 namespace IssueTracker.Controllers
 {
@@ -20,7 +21,6 @@ namespace IssueTracker.Controllers
     public class ProjectModelController : Controller
     {
         private WitContext db = new WitContext();
-
         private ApplicationUserManager _userManager;
 
         public ApplicationUserManager UserManager
@@ -37,30 +37,58 @@ namespace IssueTracker.Controllers
         }
 
         // GET: ProjectModel
-        public ActionResult Index()//might not need proj id, already got user id
-        {
-            var viewModel = new IdenProjJoinViewModel();
-
+        public ActionResult Index(string currentFilter, string searchString, int? page)//might not need proj id, already got user id
+        {            
+            IEnumerable<ProjectModel> joinedModel = null;
+            
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+            ViewBag.CurrentFilter = searchString;
             if (User.IsInRole("Admin"))
             {
-                viewModel.MasterProjects = db.Projects
-                .OrderBy(p => p.ProjectID);
-                viewModel.Projects = Enumerable.Empty<ProjectModel>();
-                return View(viewModel);
+                joinedModel = (from p in db.Projects
+                              select p).ToList();
+                ViewBag.masterCnt = joinedModel.Count();
             }
-            viewModel.Projects = (from p in db.Projects
-                         join ip in db.IdenProjs
-                         on p.ProjectID equals ip.ProjID
-                         where ip.UserID.Contains(User.Identity.Name) && ip.Master == false
-                         select p).ToList();//p && ip.Master??
+            else
+            {
+                joinedModel =
+                    (from p in db.Projects
+                     join ip in db.IdenProjs
+                     on p.ProjectID equals ip.ProjID
+                     where ip.UserID.Contains(User.Identity.Name)
+                     orderby ip.Master descending, p.ProjName ascending //how to get master count
+                     select p).ToList();//.count
 
-            viewModel.MasterProjects = (from p in db.Projects
-                                  join ip in db.IdenProjs
-                                  on p.ProjectID equals ip.ProjID
-                                  where ip.UserID.Contains(User.Identity.Name) && ip.Master == true
-                                  select p).ToList();
+                ViewBag.masterCnt = (from p in db.Projects
+                                 join ip in db.IdenProjs
+                                 on p.ProjectID equals ip.ProjID
+                                 where ip.UserID.Contains(User.Identity.Name) && ip.Master == true
+                                 select p).Count();
+            }
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                joinedModel = joinedModel.Where(i => i.ProjName.Contains(searchString));
 
-            return View(viewModel);
+                ViewBag.masterCnt = (from p in db.Projects
+                                     join ip in db.IdenProjs
+                                     on p.ProjectID equals ip.ProjID
+                                     where ip.UserID.Contains(User.Identity.Name) && ip.Master == true && p.ProjName.Contains(searchString)
+                                     select p).Count();
+            }
+            int pageSize = 20;
+            int pageNumber = (page ?? 1);
+            
+            ViewBag.pageSize = pageSize;
+            ViewBag.pageNum = pageNumber;
+
+            return View(joinedModel.ToPagedList(pageNumber, pageSize));
         }        
 
         // GET: ProjectModel/Create        
@@ -72,13 +100,14 @@ namespace IssueTracker.Controllers
         // POST: ProjectModel/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        [HttpPost]        
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ProjectID,ProjName")]ProjectModel projectModel)
-        {            
-            try {
+        {
+            try
+            {
                 if (ModelState.IsValid)
-                {                    
+                {
                     IdenProjModel ipModel = new IdenProjModel();
                     ipModel.IdenProjID = db.IdenProjs.Count() + 1;
                     ipModel.ProjID = projectModel.ProjectID;
@@ -97,7 +126,7 @@ namespace IssueTracker.Controllers
             }
             return View(projectModel);
         }
-
+        
         // GET: ProjectModel/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -155,9 +184,15 @@ namespace IssueTracker.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ViewBag.ProjName = db.Projects.Find(joinID).ProjName;
+            ProjectModel projectModel = db.Projects.Find(joinID);
+            if (projectModel == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.ProjName = projectModel.ProjName;
+            ViewBag.joinID = joinID;
             ViewBag.UserName = UserManager.FindByName(User.Identity.Name).MainName;
-            return View();
+            return View(projectModel);
         }
 
         [HttpPost, ActionName("Join")]
@@ -170,29 +205,24 @@ namespace IssueTracker.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             //edge case: make a join user a master if they are joining a project with 0 users
-            bool noIdenticalEntry = true;
             foreach (IdenProjModel ip in db.IdenProjs)
             {
                 if (ip.ProjID == joinID && ip.UserID == User.Identity.Name)
                 {
-                    noIdenticalEntry = false;
                     return RedirectToAction("Index","Home", new { });
                 }
             }
-            if (noIdenticalEntry)
-            {
-                IdenProjModel ipModel = new IdenProjModel();
-                ipModel.IdenProjID = db.IdenProjs.Count()+1;
-                ipModel.ProjID = (int) joinID;
-                ipModel.Master = false;
-                ipModel.UserID = User.Identity.Name;
-                ipModel.Project = db.Projects.Find(joinID);//might itterate db ProjID count
-                ipModel.MainName = UserManager.FindByName(User.Identity.Name).MainName;
-                db.IdenProjs.Add(ipModel);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View();
+            
+            IdenProjModel ipModel = new IdenProjModel();
+            ipModel.IdenProjID = db.IdenProjs.Count()+1;
+            ipModel.ProjID = (int) joinID;
+            ipModel.Master = false;
+            ipModel.UserID = User.Identity.Name;
+            ipModel.Project = db.Projects.Find(joinID);//might itterate db ProjID count
+            ipModel.MainName = UserManager.FindByName(User.Identity.Name).MainName;
+            db.IdenProjs.Add(ipModel);
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         public ActionResult Leave(int? id)
@@ -201,7 +231,12 @@ namespace IssueTracker.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            return View();
+            ProjectModel projectModel = db.Projects.Find(id);
+            if (projectModel == null)
+            {
+                return HttpNotFound();
+            }
+            return View(projectModel);
         }
 
         [HttpPost,ActionName("Leave")]

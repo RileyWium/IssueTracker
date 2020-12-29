@@ -35,13 +35,16 @@ namespace IssueTracker.Controllers
             }
         }
         
-        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page, int projID)
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page, int projID, int? issID)
         {
+            
             ViewBag.ProjID = projID;
+            ViewBag.IssueID = issID;
+            ViewBag.CurrentPage = page;
             ViewBag.CurrentSort = sortOrder;
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";           
-                        
+            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+                                    
             if (searchString != null)
             {
                 page = 1;
@@ -51,17 +54,17 @@ namespace IssueTracker.Controllers
                 searchString = currentFilter;
             }
             ViewBag.CurrentFilter = searchString;
-            var issues = from i in db.Issues
-                         where i.ProjID == projID
-                         select i;
+            IQueryable<IssueModel> issues;
+          
+            issues = from i in db.Issues
+                        where i.ProjID == projID
+                        select i;
+            
             if (!String.IsNullOrEmpty(searchString))
             {
-                //issues = issues.Where(i => i.IssName.Contains(searchString));
-                issues = from i in db.Issues
-                         where i.ProjID == projID && i.IssName.Contains(searchString)
-                         select i;
+                issues = issues.Where(i => i.IssName.Contains(searchString));
             }
-            switch (sortOrder)
+                switch (sortOrder)
             {
                 case "name_desc":
                     issues = issues.OrderByDescending(i => i.IssName);
@@ -76,7 +79,7 @@ namespace IssueTracker.Controllers
                     issues = issues.OrderBy(i => i.IssName);
                     break;
             }
-            int pageSize = 5;
+            int pageSize = 10;
             int pageNumber = (page ?? 1);
             return View(issues.ToPagedList(pageNumber,pageSize));
         }

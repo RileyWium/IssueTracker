@@ -113,3 +113,4 @@ D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\obj\Debug\IssueTrack
 D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\obj\Debug\IssueTracker.Migrations.WitConfiguration.twoContextReset.resources
 D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\obj\Debug\IssueTracker.Migrations.updateUserFields.resources
 D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\obj\Debug\IssueTracker.Migrations.WitConfiguration.nullableDueDate.resources
+D:\Coding\IssueTracker\IssueTrackerApplication\IssueTracker\obj\Debug\IssueTracker.csproj.CoreCompileInputs.cache

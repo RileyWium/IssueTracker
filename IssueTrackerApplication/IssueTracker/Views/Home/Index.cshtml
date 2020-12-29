@@ -1,46 +1,52 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
-<!--
-<div class="navbar navbar-fixed-top">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <ul class="nav navbar">
-                <li><button type="button" class="btn btn-secondary">Name</button></li>
-                <li><button type="button" class="btn btn-secondary">Key</button></li>
-                <li><button type="button" class="btn btn-secondary">Date</button></li>
-            </ul>
-        </div>
-        <div>
-            <ul class="nav navbar">
-                <li><button onclick="location.href='ATUrl.Action("Index", "Home")'"  class="btn btn-primary">
-                    <i class="fa fa-plus" aria-hidden="true"></i> New Project</button></li>
-                <li><button class="btn btn-secondary">
-                    <i class="fa fa-refresh" aria-hidden="false"></i> Refresh</button></li>
-            </ul>
-        </div>
-    </div>
-</div>
--->
 
+    <div class="row justify-content-center">
+        <div class="col-xl-3">
+            <div class="card shadow mb-4" >
+                <div class="card-header py-3">
+                    <div class="m-0 h6 font-weight-bold text-primary">About WIT</div>
+                </div>
+                <div class="card-body">
+                    <div>
+                        The Wium Issue Tracker is used to coordinate projects between groups of people right from the browser.
+                        It allows for users to setup projects, invite each other, and create issue objects to track the
+                        progress of projects.
+                    </div>
+                    <div class="mb-0">Registering and logging in is required to ensure authentication.</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-xl-3">
+            <div class="card shadow mb-4" >
+                <div class="card-header py-3">
+                    <div class="m-0 h6 font-weight-bold text-primary">Tools Used in Development</div>
+                </div>
+                <div class="card-body">
+                    <div>
+                        Made in ASP.NET MVC with Code First Approach and Entity Framework. The database runs on
+                        Microsoft SQL Server Express. The front end uses Html and CSS, along with libraries like bootstrap and font awesome.
+                    </div>
+                    <div class="mb-0">Uses SB Admin 2 theme from https://startbootstrap.com/themes/ </div>
+                    <div class="mb-0">Uses https://datatables.net/ </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-xl-3">
+            <div class="card shadow mb-4 " >
+                <div class="card-header py-3">
+                    <div class="m-0 h6 font-weight-bold text-primary">Software Requirement Specifications</div>
+                </div>
+                <div class="card-body">
+                    <div>
+                        The SRS can be found here:
+                    </div>
+                    <div class="mb-0"><a class="btn btn-primary" href="~/Content/TextFiles/WIT_SRS.pdf" download>Download &raquo;</a></div>
+                </div>
+            </div>
+        </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>About WIT</h2>
-        <p>The Wium Issue Tracker is used to coordinate projects between groups of people right from the browser.
-           It allows for users to setup projects, invite each other, and create issue objects to track the
-           progress of projects. Registering and logging in is required to ensure authentication.
-        </p>
     </div>
-    <div class="col-md-4">
-        <h2>Tools Used In Development</h2>
-        <p>Was made in ASP.NET MVC with Code First Approach and Entity Framework. The database runs on
-           Microsoft SQL Server Express. The front end uses Html and CSS, along with libraries like bootstrap and font awesome.
-        </p>
-    </div>
-    <div class="col-md-4">
-        <h2>Software Requirement Specifications</h2>
-        <p>The SRS can be found here:</p>
-        <p><a class="btn btn-default" href="~/Content/TextFiles/WIT_SRS.pdf" download>Download &raquo;</a></p>
-    </div>
-</div>

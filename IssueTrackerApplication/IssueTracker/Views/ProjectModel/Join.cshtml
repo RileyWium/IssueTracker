@@ -13,14 +13,16 @@
         Hello @ViewBag.UserName press the button to join the project: @ViewBag.ProjectName.
     </p>
 </div>
-@using (Html.BeginForm())
+@using (Html.BeginForm("Join","ProjectModel", new { joinID= @ViewBag.joinID}, FormMethod.Post, new { id="mainForm"}))
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Join Project" class="btn btn-default" />
+                <button id="submitButton" class="btn btn-primary" type="submit" onclick="propDisable()">
+                    Join Project
+                </button>
             </div>
         </div>
     </div>
@@ -28,4 +30,5 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/Scripts/WIT/PropDisable.js")
 }

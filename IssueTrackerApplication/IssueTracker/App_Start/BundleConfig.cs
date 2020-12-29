@@ -25,6 +25,14 @@ namespace IssueTracker
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            bundles.Add(new ScriptBundle("~/Scripts/js").Include(
+                "~/Scripts/js/sb-admin-2.js",
+                "~/Scripts/js/sb-admin-2.min.js"));
+
+            bundles.Add(new StyleBundle("~/Content/css").Include(
+                "~/Content/css/sb-admin-2.css",
+                "~/Content/css/sb-admin-2..min.css"));
         }
     }
 }
